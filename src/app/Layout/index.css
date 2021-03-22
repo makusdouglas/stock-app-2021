@@ -1,13 +1,13 @@
 /** @format */
 
-@import '~antd/dist/antd.css';
+/* @import '~antd/dist/antd.css'; */
 
 .ant-layout-sider-children .logo {
   /* width: 120px; */
   height: 32px;
   margin: 16px;
   /* background: rgba(255, 255, 255, 0.3); */
-  background: rgba(24, 144, 255, 0.3);
+  background: rgba(255, 255, 255, 0.1);
 
   display: flex;
   flex-direction: row;

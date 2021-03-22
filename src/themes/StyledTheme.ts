@@ -5,7 +5,7 @@ import { DefaultTheme } from 'styled-components';
 export const LightTheme: DefaultTheme = {
   name: 'light',
   colors: {
-    primary: '#715fc1',
+    primary: '#53284F',
     secondary: '#f5444f',
     body: '#FFFFFF',
     text: '#111',

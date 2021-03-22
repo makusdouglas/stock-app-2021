@@ -1,33 +1,34 @@
 import React, { useState } from 'react';
 
 import { Layout, Menu, Breadcrumb } from 'antd';
-import { 
-    UserOutlined, 
-    LaptopOutlined, 
-    NotificationOutlined, 
-    MenuUnfoldOutlined,
-    MenuFoldOutlined, 
+import {
+  UserOutlined,
+  LaptopOutlined,
+  NotificationOutlined,
+  MenuUnfoldOutlined,
+  MenuFoldOutlined,
 } from '@ant-design/icons';
 import './index.css'
 import { StyledLink } from '../components/HeaderComponent/styles';
 import { useLocation } from 'react-router';
-
+// import { purple } from '@ant-design/colors'
+// import { useTheme } from 'styled-components';
 const { SubMenu } = Menu;
 const { Header, Content, Sider } = Layout;
 
-const AppLayout: React.FC = ({children}) => {
-    const [collapsed, setCollapsed] = useState<boolean>(false)
+const AppLayout: React.FC = ({ children }) => {
+  const [collapsed, setCollapsed] = useState<boolean>(false)
 
-    const toggle = () => {
-        setCollapsed(!collapsed)
-    };
-
-    const location = useLocation()
+  const toggle = () => {
+    setCollapsed(!collapsed)
+  };
+  // const theme = useTheme();
+  const location = useLocation();
   return (
-    <Layout>
-        <Sider width={200} className="side-layout-height" trigger={null}  collapsible collapsed={collapsed}>
+    <Layout style={{ minWidth: '100vw', minHeight: '100vh' }}>
+      <Sider width={200} className="side-layout-height" trigger={null} collapsible collapsed={collapsed}>
         <div className="logo">
-            <h1>{collapsed?'STK':'Stock Center'}</h1>
+          <h1>{collapsed ? 'PTZ' : 'Petruz'}</h1>
         </div>
         <Menu
           theme='dark'
@@ -56,25 +57,25 @@ const AppLayout: React.FC = ({children}) => {
           </SubMenu>
         </Menu>
       </Sider>
-    <Layout>
-    <Header className="header" style={{padding: 0, backgroundColor:'#fff'}}>
-      <Menu theme="light" mode="horizontal" className="site-layout-background" defaultSelectedKeys={[location.pathname]}>
-        {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
+      <Layout>
+        <Header className="header" style={{ padding: 0, backgroundColor: '#fff' }}>
+          <Menu theme="light" mode="horizontal" className="site-layout-background" defaultSelectedKeys={[location.pathname]}>
+            {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
               className: 'trigger',
               onClick: toggle,
             })}
-        <Menu.Item key="/home" ><StyledLink to='/home' >Home</StyledLink></Menu.Item>
-        <Menu.Item key="/profile" ><StyledLink to='/profile'>Profile</StyledLink></Menu.Item>
-      </Menu>
-    </Header>
-      
-      <Layout style={{ padding: '0 24px 24px' }}>
-        <Breadcrumb style={{ margin: '16px 0' }}>
-          <Breadcrumb.Item>Home</Breadcrumb.Item>
-          <Breadcrumb.Item>List</Breadcrumb.Item>
-          <Breadcrumb.Item>App</Breadcrumb.Item>
-        </Breadcrumb>
-        {/* <Content
+            <Menu.Item key="/home" ><StyledLink to='/home' >Home</StyledLink></Menu.Item>
+            <Menu.Item key="/profile" ><StyledLink to='/profile'>Profile</StyledLink></Menu.Item>
+          </Menu>
+        </Header>
+
+        <Layout style={{ padding: '0 24px 24px' }}>
+          <Breadcrumb style={{ margin: '16px 0' }}>
+            <Breadcrumb.Item>Home</Breadcrumb.Item>
+            <Breadcrumb.Item>List</Breadcrumb.Item>
+            <Breadcrumb.Item>App</Breadcrumb.Item>
+          </Breadcrumb>
+          {/* <Content
           className="site-layout-background"
           style={{
             padding: 24,
@@ -83,11 +84,11 @@ const AppLayout: React.FC = ({children}) => {
           }}
         > */}
           {children}
-        {/* </Content> */}
+          {/* </Content> */}
+        </Layout>
       </Layout>
     </Layout>
-  </Layout>
-    )
+  )
 }
 
 export default AppLayout;
