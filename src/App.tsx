@@ -7,7 +7,7 @@ import { DefaultRoutes } from './app/routes';
 import { GlobalStyle } from './config/GlobalStyle';
 import { LightTheme, DarkTheme } from './themes/StyledTheme';
 import './App.less';
-import AppLayout from './app/Layout';
+import { ConfigProvider } from 'antd';
 
 
 function App() {
@@ -16,10 +16,9 @@ function App() {
     <ThemeProvider theme={darkMode ? DarkTheme : LightTheme}>
       <GlobalStyle />
       <BrowserRouter>
-        {/* <Header darkMode={darkMode}  setDarkMode={setDarkMode}/> */}
-        <AppLayout>
+        <ConfigProvider direction="ltr" >
           <DefaultRoutes />
-        </AppLayout>
+        </ConfigProvider>
       </BrowserRouter>
     </ThemeProvider>
   );

@@ -1,20 +1,26 @@
 import React from 'react';
 import {
-Route, Switch,
- Redirect
+    Switch,
+    Redirect
 } from 'react-router-dom';
+import DashboardModule from '../pages/DashboardModule';
 import HomePage from '../pages/HomePage';
 import NotFoudPage from '../pages/NotFoudPage';
 import ProfilePage from '../pages/ProfilePage';
+import SignInPage from '../pages/SignInPage';
+import PrivateRoute from './PrivateRoute';
+import Route from './Route';
 
 export const DefaultRoutes: React.FC = () => {
     return (
-            <Switch>
-                <Route path='/home' exact children={<HomePage/>}/>
-                <Route path='/profile' exact children={<ProfilePage/>}/>
-                <Route path='/404' exact children={<NotFoudPage/>}/>
-                <Route path='' children={<Redirect to='/404'/>} />
-            </Switch>
-        
+        <Switch>
+            <Route path='/' exact component={SignInPage} />
+            <Route path='/home' exact component={HomePage} isPrivate />
+            <Route path='/profile' exact component={ProfilePage} isPrivate />
+            <Route path='/dashboard' exact component={DashboardModule} isPrivate />
+            <Route path='/404' exact component={NotFoudPage} />
+            <Route component={() => <Redirect to='/404' />} />
+        </Switch>
+
     )
 }
