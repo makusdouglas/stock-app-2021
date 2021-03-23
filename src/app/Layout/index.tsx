@@ -8,13 +8,16 @@ import {
   MenuUnfoldOutlined,
   MenuFoldOutlined,
 } from '@ant-design/icons';
-import './index.css'
+import './index.less'
 import { StyledLink } from '../components/HeaderComponent/styles';
 import { useLocation } from 'react-router';
+import { lighten } from 'polished';
+import { FooterStyled, SiderStyled } from './styles';
+import { Footer } from 'antd/lib/layout/layout';
 // import { purple } from '@ant-design/colors'
 // import { useTheme } from 'styled-components';
 const { SubMenu } = Menu;
-const { Header, Content, Sider } = Layout;
+const { Header, Content, } = Layout;
 
 const AppLayout: React.FC = ({ children }) => {
   const [collapsed, setCollapsed] = useState<boolean>(false)
@@ -25,14 +28,14 @@ const AppLayout: React.FC = ({ children }) => {
   // const theme = useTheme();
   const location = useLocation();
   return (
-    <Layout style={{ minWidth: '100vw', minHeight: '100vh' }}>
-      <Sider width={200} className="side-layout-height" trigger={null} collapsible collapsed={collapsed}>
+    <Layout >
+      <SiderStyled width={200} trigger={null} collapsible collapsed={collapsed}>
         <div className="logo">
           <h1>{collapsed ? 'PTZ' : 'Petruz'}</h1>
         </div>
         <Menu
           theme='dark'
-          mode="inline"
+          mode='inline'
           defaultSelectedKeys={['1']}
           defaultOpenKeys={['sub1']}
           style={{ height: '100%', borderRight: 0 }}
@@ -56,7 +59,7 @@ const AppLayout: React.FC = ({ children }) => {
             <Menu.Item key="12">option12</Menu.Item>
           </SubMenu>
         </Menu>
-      </Sider>
+      </SiderStyled>
       <Layout>
         <Header className="header" style={{ padding: 0, backgroundColor: '#fff' }}>
           <Menu theme="light" mode="horizontal" className="site-layout-background" defaultSelectedKeys={[location.pathname]}>
@@ -65,6 +68,9 @@ const AppLayout: React.FC = ({ children }) => {
               onClick: toggle,
             })}
             <Menu.Item key="/home" ><StyledLink to='/home' >Home</StyledLink></Menu.Item>
+            <Menu.Item key="/profile" ><StyledLink to='/profile'>Profile</StyledLink></Menu.Item>
+            <Menu.Item key="/profile" ><StyledLink to='/profile'>Profile</StyledLink></Menu.Item>
+            <Menu.Item key="/profile" ><StyledLink to='/profile'>Profile</StyledLink></Menu.Item>
             <Menu.Item key="/profile" ><StyledLink to='/profile'>Profile</StyledLink></Menu.Item>
           </Menu>
         </Header>
@@ -85,6 +91,7 @@ const AppLayout: React.FC = ({ children }) => {
         > */}
           {children}
           {/* </Content> */}
+          {/* <Footer title='Copyright @ 2021' /> */}
         </Layout>
       </Layout>
     </Layout>
