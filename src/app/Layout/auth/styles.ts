@@ -8,6 +8,7 @@ export const Container = styled.div`
   height: 100vh;
   width: 100vw;
   background-color: ${props => props.theme.colors.primary};
+  background-position: right;
   justify-content: center;
   align-items: center;
 `;

@@ -8,7 +8,13 @@ export const Container = styled.div`
   /* flex: 1; */
   /* min-height: 500px; */
   /* min-width: 800px; */
+  background-image: url('images/logos/white-logo.png');
+  background-position: bottom right;
+  background-size: 150px;
+  background-repeat: no-repeat;
   background-color: ${props => props.theme.colors.primary};
+  background-blend-mode: soft-light;
+
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   position: relative;
