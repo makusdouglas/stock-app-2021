@@ -14,32 +14,65 @@ export const Container = styled.div`
   background-repeat: no-repeat;
   background-color: ${props => props.theme.colors.box}; 
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+
+  grid-template-areas: 
+            "crs login"
+            "crs login"
+            "crs login"
+            "crs footer";
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 0,4fr;
   position: relative;
-  /* @media only screen and (max-width: 768px){
+
+   @media only screen and (max-width: 1344px){
     background-size: 100% contain;
-    & > aside:first-child {
-      display: none;
-    }
+    grid-template-areas: 
+            "crs login"
+            "crs login"
+            "crs login"
+            ". footer";
+  } 
+  @media only screen and (max-width: 1000px){
+    background-size: 100% contain;
+    grid-template-areas: 
+            "crs login"
+            "crs login"
+            "crs login"
+            "footer footer";
   }
- @media only screen and (max-width: 1400px){
-     
- } */
+  grid-template-columns: 1fr 1fr;
+ @media only screen and (max-width: 830px){
+  grid-template-areas: 
+            "login login"
+            "login login"
+            "login login"
+            "footer footer";
+ }
 `;
 
 export const LeftSider = styled.aside`
+  grid-area: crs;
   display: flex;
   justify-content: center;
   align-items: center;
   /* background-color: #eee; */
   max-height: 100vh;
+  padding: 20px;
+
+  // Media querys
+  @media only screen and (max-width: 830px){
+    display: none;
+  }
 `;
 export const ImageStyled = styled(Image)`
-  object-fit: scale-down;
+  object-fit: contain;
   object-position: center;
-  height: 100vh;
+  min-width: 50vw;
+  max-height: 95vh;
+  align-self: center;
 `;
 export const RightSide = styled.aside`
+  grid-area: login;
   display: flex;
   flex-direction: column;
   flex: 1;
@@ -53,7 +86,8 @@ export const FormContainer = styled.main`
   justify-content: center;
   border-radius: 10px;
 
-  background-color: #fff;
+  background-color: #f5f5f5;
+  border: 1px solid ${props => props.theme.colors.primary};
   box-shadow: 0 0 10px 10px rgba(0,0,0, 0.2);
   max-width: 20rem;
   padding: 18px 20px;

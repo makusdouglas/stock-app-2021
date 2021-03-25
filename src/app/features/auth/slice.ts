@@ -20,7 +20,7 @@ interface RequestLoginResponse {
   access_token: string;
 }
 
-const requestLogin = createAsyncThunk<
+export const requestLogin = createAsyncThunk<
   // Return type of the payload creator
   RequestLoginResponse,
   // First argument to the payload creator
@@ -28,17 +28,20 @@ const requestLogin = createAsyncThunk<
   {
     rejectValue: MyKnownError;
   }
-
 // Optional fields for defining thunkApi field types
 >(
   'auth/requestLogin',
   async (userData, thunkApi) => {
     const { email, password } = userData;
     try {
-      const response = await api.post<RequestLoginResponse>('/oauth', {
+      const response = await api.post<RequestLoginResponse>('/oauth/token', {
+        client_id: "3",
+        client_secret: "petruzapiBxwer!294nPqzojd8349",
+        grant_type: "password",
         email,
         password,
       });
+      console.log(response.data);
       return response.data;
     } catch (err) {
       return thunkApi.rejectWithValue({ errorMessage: 'falha no login' });
@@ -50,7 +53,7 @@ const requestLogin = createAsyncThunk<
 const initialState: AuthState = {
   email: null,
   password: null,
-  isAuthenticated: false,
+  isAuthenticated: true,
   loading: false,
   token: null,
 };

@@ -1,31 +1,50 @@
 import React from 'react';
-import { Typography, Image, Input, Space, Form, Checkbox, Button, Divider } from 'antd'
+import { Typography, Image, Input, Space, Form, Checkbox, Button, Divider, notification } from 'antd'
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
+
 import { Container, ImageStyled, LeftSider, RightSide, FormContainer } from './styles';
 import Carrossel from '../../components/Carrossel';
 import { Footer } from 'antd/lib/layout/layout';
+import { SignInPayload } from '../../features/auth/types';
+import { ValidateErrorEntity } from './types';
 
-
+type SignInFormValidatorErrorsType = ValidateErrorEntity<SignInPayload>;
 const SignInPage: React.FC = () => {
     const { Title, Text } = Typography;
+    const [signInForm] = Form.useForm<SignInPayload>();
 
-    const onFinish = (values: any) => {
-        console.log('Success:', values);
+    const onFinish = (values: SignInPayload) => {
+        console.log('Success');
+        console.table(signInForm.getFieldsValue())
     };
 
-    const onFinishFailed = (errorInfo: any) => {
+    const onFinishFailed = (errorInfo: SignInFormValidatorErrorsType) => {
         console.log('Failed:', errorInfo);
+        errorInfo.errorFields.map(err => {
+            err.errors.map(error =>
+                notification.error({
+                    message: err.name,
+                    description: error
+                }))
+        })
     };
     return (
         <Container>
-            <LeftSider>
+            <LeftSider className="carrousel-container-stld">
                 <Carrossel
                     fade
                     adaptiveHeight
                     autoplay
+                    autoplaySpeed={8000}
+                    centerMode
+                    responsive={[{
+                        breakpoint: 720,
+                        settings: {
+                        }
+                    }]}
                     style={{
                         maxWidth: '50vw',
-                        height: '100vh',
+                        // height: '100vh',
 
                     }}>
                     <ImageStyled src="images/carrousel/petruz-depoimento-paulo.jpg" />
@@ -45,16 +64,20 @@ const SignInPage: React.FC = () => {
                         </Divider>
                         {/* <Title level={3} style={{ marginBottom: 0 }}>Login</Title> */}
                         <Text type="secondary">Insira seus dados abaixo:</Text>
-                        <Form
-                            initialValues={{ remember: true }}
+                        <Form<SignInPayload>
+                            form={signInForm}
+                            initialValues={{ remember: false }}
                             onFinish={onFinish}
-                            onFinishFailed={onFinishFailed}
+                            onFinishFailed={(errors: SignInFormValidatorErrorsType) => onFinishFailed(errors)}
                             name="authForm"
+                            layout='vertical'
                         >
                             <Form.Item
                                 label="E-mail"
                                 name="email"
-                                rules={[{ required: true, message: 'Por favor, insira seu e-mail.' }]}
+                                rules={[
+                                    { required: true, message: 'Por favor, insira seu e-mail.' }
+                                ]}
                             >
                                 <Input
                                     placeholder="Seu e-ḿail"
@@ -94,16 +117,17 @@ const SignInPage: React.FC = () => {
 
                     </Space>
                 </FormContainer>
-                <Footer
-                    style={{
-                        textAlign: 'center',
-                        position: 'absolute',
-                        bottom: '40px',
-                        color: 'whitesmoke',
-                        backgroundColor: 'transparent'
-                    }}>
-                    Petruz WEb App ©2021 Created by Petruz Fruity - v1.4</Footer>
             </RightSide>
+            <Footer
+                style={{
+                    gridArea: 'footer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    color: 'whitesmoke',
+                    backgroundColor: 'transparent',
+                }}>
+                Petruz WEb App ©2021 Created by Petruz Fruity - v1.4</Footer>
         </Container>
     );
 }
