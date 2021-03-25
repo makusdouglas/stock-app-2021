@@ -8,7 +8,7 @@ import HomePage from '../pages/HomePage';
 import NotFoudPage from '../pages/NotFoudPage';
 import ProfilePage from '../pages/ProfilePage';
 import SignInPage from '../pages/SignInPage';
-import PrivateRoute from './PrivateRoute';
+// import PrivateRoute from './PrivateRoute';
 import Route from './Route';
 
 export const DefaultRoutes: React.FC = () => {

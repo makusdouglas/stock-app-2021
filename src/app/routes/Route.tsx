@@ -2,6 +2,7 @@ import React from 'react';
 import { Route, Redirect, RouteProps } from 'react-router-dom';
 import AuthLeyout from '../Layout/auth';
 import DefaultLayout from '../Layout/default';
+import { useAppSelector } from '../store/hooks';
 
 // import { store } from '../store';
 interface PrivateRouteProps extends RouteProps {
@@ -17,22 +18,22 @@ const RouteWrapper = (props: PrivateRouteProps) => {
         undefinedRoute,
         ...rest
     } = props;
-    const signed = true;
+    const {isAuthenticated} = useAppSelector(state => state.auth);
     //   const { signed } = store.getState().auth;
 
-    if (!signed && isPrivate) {
+    if (!isAuthenticated && isPrivate) {
         return <Redirect to="/" />;
     }
-    if (signed && !isPrivate) {
+    if (isAuthenticated && !isPrivate) {
         return <Redirect to="/dashboard" />;
     }
-    if (undefinedRoute && !signed) {
+    if (undefinedRoute && !isAuthenticated) {
         return <Redirect to="/" />;
     }
-    if (undefinedRoute && signed) {
+    if (undefinedRoute && isAuthenticated) {
         return <Redirect to="/dashboard" />;
     }
-    const Layout = signed ? DefaultLayout : AuthLeyout;
+    const Layout = isAuthenticated ? DefaultLayout : AuthLeyout;
 
     return (
         <Route
