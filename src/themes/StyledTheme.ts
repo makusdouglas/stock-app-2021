@@ -10,6 +10,7 @@ export const LightTheme: DefaultTheme = {
     body: '#FFFFFF',
     text: '#111',
     title: '#222',
+    box: '#3B1C38',
     buttons: {
       primary: '#715fc1',
       alert: '#ffdd55',
@@ -53,6 +54,7 @@ export const DarkTheme: DefaultTheme = {
     body: '#0c0d11',
     text: '#ccc',
     title: '#f5f5f5',
+    box: '#3B1C38',
     buttons: {
       primary: '#715fc1',
       alert: '#ffdd55',

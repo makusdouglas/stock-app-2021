@@ -29,7 +29,7 @@ const requestLogin = createAsyncThunk<
     rejectValue: MyKnownError;
   }
 
-  // Optional fields for defining thunkApi field types
+// Optional fields for defining thunkApi field types
 >(
   'auth/requestLogin',
   async (userData, thunkApi) => {
@@ -97,7 +97,7 @@ export function asyncLogin(props: SignInPayload) {
       //       password: props.password,
       //     })
       //   );
-    } catch (error) {}
+    } catch (error) { }
   };
 }
 

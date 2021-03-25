@@ -5,40 +5,38 @@ import { Image } from 'antd';
 import styled from 'styled-components';
 
 export const Container = styled.div`
-  /* flex: 1; */
-  /* min-height: 500px; */
-  /* min-width: 800px; */
-  background-image: url('images/logos/white-logo.png');
+  flex: 1;
+  min-height: 100vh;
+  /* background-blend-mode: soft-light; */
+  background-image: url('images/bg/bg-objects.png');
   background-position: bottom right;
-  background-size: 150px;
+  background-size: 1200px;
   background-repeat: no-repeat;
-  background-color: ${props => props.theme.colors.primary};
-  background-blend-mode: soft-light;
-
+  background-color: ${props => props.theme.colors.box}; 
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   position: relative;
-  /* @media only screen and (max-width: 1700px){
-     margin: 4rem 5rem;
- }
+  /* @media only screen and (max-width: 768px){
+    background-size: 100% contain;
+    & > aside:first-child {
+      display: none;
+    }
+  }
  @media only screen and (max-width: 1400px){
-     margin: 2rem 2rem;
+     
  } */
 `;
 
 export const LeftSider = styled.aside`
   display: flex;
-  /* flex: 1; */
   justify-content: center;
   align-items: center;
   /* background-color: #eee; */
-  position: relative;
   max-height: 100vh;
 `;
 export const ImageStyled = styled(Image)`
   object-fit: scale-down;
   object-position: center;
-  padding: 20px;
   height: 100vh;
 `;
 export const RightSide = styled.aside`
@@ -47,32 +45,33 @@ export const RightSide = styled.aside`
   flex: 1;
   justify-content: center;
   align-items: center;
-  /* position: absolute; */
-
-  & > section {
-    display: flex;
-    align-items: baseline;
-    justify-content: center;
-
-    margin: 10px 20px;
-    border-radius: 30px;
-
-    color: #ddd;
-    padding: 10px;
-    font-family: 'Ubuntu', sans-serif;
-    h1 {
-      color: #fff;
-      font-weight: 500;
-    }
-  }
 `;
 
 export const FormContainer = styled.main`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  border-radius: 10px;
 
   background-color: #fff;
+  box-shadow: 0 0 10px 10px rgba(0,0,0, 0.2);
   max-width: 20rem;
   padding: 18px 20px;
+
+
+  & > section {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+
+    margin: 10px auto;
+    
+    padding: 10px;
+    font-family: 'Ubuntu', sans-serif;
+    div {
+      width: 90%;
+    }
+  }
+
 `;
