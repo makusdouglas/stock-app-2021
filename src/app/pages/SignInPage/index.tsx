@@ -5,17 +5,28 @@ import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 import { Container, ImageStyled, LeftSider, RightSide, FormContainer } from './styles';
 import Carrossel from '../../components/Carrossel';
 import { Footer } from 'antd/lib/layout/layout';
-import { SignInPayload } from '../../features/auth/types';
 import { ValidateErrorEntity } from './types';
+
+// Redux Methods and Types
+import { SignInPayload } from '../../features/auth/types';
+import { useAppDispatch } from '../../store/hooks';
+import { asyncLogin } from '../../features/auth/slice'
 
 type SignInFormValidatorErrorsType = ValidateErrorEntity<SignInPayload>;
 const SignInPage: React.FC = () => {
     const { Title, Text } = Typography;
     const [signInForm] = Form.useForm<SignInPayload>();
-
+    const dispatch = useAppDispatch();
     const onFinish = (values: SignInPayload) => {
         console.log('Success');
         console.table(signInForm.getFieldsValue())
+        const { email, password, rememberCredentials } = values;
+        // dispatch(asyncLogin({
+        //     email,
+        //     password,
+        //     rememberCredentials
+        // })
+        // )
     };
 
     const onFinishFailed = (errorInfo: SignInFormValidatorErrorsType) => {
@@ -23,11 +34,14 @@ const SignInPage: React.FC = () => {
         errorInfo.errorFields.map(err => {
             err.errors.map(error =>
                 notification.error({
-                    message: err.name,
+                    message: `${err.name}`,
                     description: error
                 }))
         })
     };
+    const clearFields = () => {
+        signInForm.resetFields();
+    }
     return (
         <Container>
             <LeftSider className="carrousel-container-stld">
@@ -66,7 +80,7 @@ const SignInPage: React.FC = () => {
                         <Text type="secondary">Insira seus dados abaixo:</Text>
                         <Form<SignInPayload>
                             form={signInForm}
-                            initialValues={{ remember: false }}
+                            initialValues={{ rememberCredentials: false }}
                             onFinish={onFinish}
                             onFinishFailed={(errors: SignInFormValidatorErrorsType) => onFinishFailed(errors)}
                             name="authForm"
@@ -76,7 +90,8 @@ const SignInPage: React.FC = () => {
                                 label="E-mail"
                                 name="email"
                                 rules={[
-                                    { required: true, message: 'Por favor, insira seu e-mail.' }
+                                    { required: true, message: 'Por favor, insira seu e-mail.' },
+                                    { type: 'email', message: 'Insira um e-mail válido.' }
                                 ]}
                             >
                                 <Input
@@ -88,12 +103,15 @@ const SignInPage: React.FC = () => {
                             <Form.Item
                                 label="Senha"
                                 name="password"
-                                rules={[{ required: true, message: 'Por favor, insira sua senha.' }]}
+
+                                rules={[
+                                    { required: true, message: 'Por favor, insira sua senha.' },
+                                    { type: 'string', min: 6, message: 'test' }
+                                ]}
                             >
                                 <Input.Password
                                     placeholder="Sua senha"
                                     type="password"
-                                    // value=""
                                     onChange={txt => { }}
                                     iconRender={visible => (visible ? <EyeTwoTone size={20} /> : <EyeInvisibleOutlined size={20} />)}
                                 />
@@ -104,7 +122,7 @@ const SignInPage: React.FC = () => {
                                 marginBottom: 0,
                             }}>
 
-                                <Form.Item name="remember" valuePropName="checked">
+                                <Form.Item name="rememberCredentials" valuePropName="checked">
                                     <Checkbox>Lembrar senha</Checkbox>
                                 </Form.Item>
                                 <Form.Item>

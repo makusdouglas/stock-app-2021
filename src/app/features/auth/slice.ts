@@ -2,7 +2,7 @@
 
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
 import api from '../../../services/api';
-import type { AppDispatch, RootState } from '../../store/index';
+import type { AppDispatch, AppThunk, RootState } from '../../store/index';
 import { SignInPayload } from './types';
 
 // Define a type for the slice state
@@ -20,16 +20,7 @@ interface RequestLoginResponse {
   access_token: string;
 }
 
-export const requestLogin = createAsyncThunk<
-  // Return type of the payload creator
-  RequestLoginResponse,
-  // First argument to the payload creator
-  SignInPayload,
-  {
-    rejectValue: MyKnownError;
-  }
-// Optional fields for defining thunkApi field types
->(
+export const requestLogin = createAsyncThunk<RequestLoginResponse, SignInPayload>(
   'auth/requestLogin',
   async (userData, thunkApi) => {
     const { email, password } = userData;
@@ -53,7 +44,7 @@ export const requestLogin = createAsyncThunk<
 const initialState: AuthState = {
   email: null,
   password: null,
-  isAuthenticated: true,
+  isAuthenticated: false,
   loading: false,
   token: null,
 };
@@ -90,17 +81,27 @@ export const authSlice = createSlice({
   },
 });
 
-export function asyncLogin(props: SignInPayload) {
+export function asyncLogin(props: SignInPayload): AppThunk {
   return async function (dispatch: AppDispatch) {
-    try {
-      //   const response = await api.post('/auth', {});
-      //   dispatch(
-      //     makeLogin({
-      //       email: props.email,
-      //       password: props.password,
-      //     })
-      //   );
-    } catch (error) { }
+
+    setTimeout(
+      () => dispatch(makeLogin({
+        email: props.email,
+        password: props.password
+      })), 5000)
+    // try {
+    //   const response = await api.post<RequestLoginResponse>('/oauth/token', {
+    //     client_id: "3",
+    //     client_secret: "petruzapiBxwer!294nPqzojd8349",
+    //     grant_type: "password",
+    //     email: props.email,
+    //     password: props.password
+    //   });
+    //   console.log(response.data);
+    //   return response.data;
+    // } catch (err) {
+    //   console.log(err);
+    // }
   };
 }
 
