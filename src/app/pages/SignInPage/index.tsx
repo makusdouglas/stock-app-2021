@@ -10,38 +10,39 @@ import { ValidateErrorEntity } from './types';
 // Redux Methods and Types
 import { SignInPayload } from '../../features/auth/types';
 import { useAppDispatch } from '../../store/hooks';
-import { asyncLogin } from '../../features/auth/slice'
+import { requestLogin } from '../../features/auth/slice'
+
 
 type SignInFormValidatorErrorsType = ValidateErrorEntity<SignInPayload>;
 const SignInPage: React.FC = () => {
     const { Title, Text } = Typography;
     const [signInForm] = Form.useForm<SignInPayload>();
     const dispatch = useAppDispatch();
-    const onFinish = (values: SignInPayload) => {
+    const onFinish = async (values: SignInPayload) => {
         console.log('Success');
         console.table(signInForm.getFieldsValue())
         const { email, password, rememberCredentials } = values;
-        // dispatch(asyncLogin({
-        //     email,
-        //     password,
-        //     rememberCredentials
-        // })
-        // )
+        await dispatch(requestLogin({
+            email,
+            password,
+            rememberCredentials
+        })
+        )
     };
 
     const onFinishFailed = (errorInfo: SignInFormValidatorErrorsType) => {
         console.log('Failed:', errorInfo);
-        errorInfo.errorFields.map(err => {
+        errorInfo.errorFields.map(err => 
             err.errors.map(error =>
                 notification.error({
                     message: `${err.name}`,
                     description: error
                 }))
-        })
+        )
     };
-    const clearFields = () => {
-        signInForm.resetFields();
-    }
+    // const clearFields = () => {
+    //     signInForm.resetFields();
+    // }
     return (
         <Container>
             <LeftSider className="carrousel-container-stld">
@@ -72,7 +73,7 @@ const SignInPage: React.FC = () => {
                     <section>
                         <Image preview={false} src="images/logos/logoPetruzCompleta.png" />
                     </section>
-                    <Space direction="vertical" size='middle'>
+                    <Space direction="vertical" size='small'>
                         <Divider orientation='center' >
                             <Title level={4} style={{ marginBottom: 0 }}>Login</Title>
                         </Divider>
@@ -84,7 +85,7 @@ const SignInPage: React.FC = () => {
                             onFinish={onFinish}
                             onFinishFailed={(errors: SignInFormValidatorErrorsType) => onFinishFailed(errors)}
                             name="authForm"
-                            layout='vertical'
+                            layout='horizontal'
                         >
                             <Form.Item
                                 label="E-mail"
@@ -135,17 +136,21 @@ const SignInPage: React.FC = () => {
 
                     </Space>
                 </FormContainer>
-            </RightSide>
             <Footer
                 style={{
-                    gridArea: 'footer',
+                    // gridArea: 'footer',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
                     color: 'whitesmoke',
                     backgroundColor: 'transparent',
+                    // position: 'absolute',
+                    // padding: 0,
+                    // bottom: 10,
+                    // right: 100
                 }}>
                 Petruz WEb App ©2021 Created by Petruz Fruity - v1.4</Footer>
+            </RightSide>
         </Container>
     );
 }

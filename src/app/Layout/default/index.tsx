@@ -1,8 +1,8 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { Layout, Menu, Breadcrumb, Divider } from 'antd';
 import {
-  UserOutlined,
+  
   LaptopOutlined,
   NotificationOutlined,
   MenuUnfoldOutlined,
@@ -12,7 +12,7 @@ import {
 import './index.less'
 import { StyledLink } from '../../components/HeaderComponent/styles';
 import { useLocation } from 'react-router';
-import { FooterStyled, MenuTitle, SiderStyled } from './styles';
+import { MenuTitle, SiderStyled } from './styles';
 import { Footer } from 'antd/lib/layout/layout';
 import { Link } from 'react-router-dom';
 // import { purple } from '@ant-design/colors'

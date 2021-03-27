@@ -13,7 +13,7 @@ import { ConfigProvider } from 'antd';
 
 
 function App() {
-  const [darkMode, setDarkMode] = useState<boolean>(false);
+  const [darkMode] = useState<boolean>(false);
   return (
     <Provider store={store}>
       <ThemeProvider theme={darkMode ? DarkTheme : LightTheme}>

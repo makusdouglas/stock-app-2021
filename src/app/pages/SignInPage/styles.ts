@@ -7,47 +7,46 @@ import styled from 'styled-components';
 export const Container = styled.div`
   flex: 1;
   min-height: 100vh;
+  max-height: 100vh;
+  min-width: 100vw;
+  max-width: 100vw;
   /* background-blend-mode: soft-light; */
   background-image: url('images/bg/bg-objects.png');
   background-position: bottom right;
   background-size: 1200px;
   background-repeat: no-repeat;
-  background-color: ${props => props.theme.colors.box}; 
+  background-color: ${props => props.theme.colors.box};
   display: grid;
 
-  grid-template-areas: 
-            "crs login"
-            "crs login"
-            "crs login"
-            "crs footer";
+  grid-template-areas:
+    'crs login'
+    'crs login'
+    'crs login';
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr 1fr 0,4fr;
+  grid-template-rows: 1fr 1fr 1fr 0, 4fr;
   position: relative;
 
-   @media only screen and (max-width: 1344px){
+  @media only screen and (max-width: 1344px) {
     background-size: 100% contain;
-    grid-template-areas: 
-            "crs login"
-            "crs login"
-            "crs login"
-            ". footer";
-  } 
-  @media only screen and (max-width: 1000px){
+    grid-template-areas:
+      'crs login'
+      'crs login'
+      'crs login';
+  }
+  @media only screen and (max-width: 1000px) {
     background-size: 100% contain;
-    grid-template-areas: 
-            "crs login"
-            "crs login"
-            "crs login"
-            "footer footer";
+    grid-template-areas:
+      'crs login'
+      'crs login'
+      'crs login';
   }
   grid-template-columns: 1fr 1fr;
- @media only screen and (max-width: 830px){
-  grid-template-areas: 
-            "login login"
-            "login login"
-            "login login"
-            "footer footer";
- }
+  @media only screen and (max-width: 830px) {
+    grid-template-areas:
+      'login login'
+      'login login'
+      'login login';
+  }
 `;
 
 export const LeftSider = styled.aside`
@@ -60,7 +59,7 @@ export const LeftSider = styled.aside`
   padding: 20px;
 
   // Media querys
-  @media only screen and (max-width: 830px){
+  @media only screen and (max-width: 830px) {
     display: none;
   }
 `;
@@ -85,13 +84,14 @@ export const FormContainer = styled.main`
   flex-direction: column;
   justify-content: center;
   border-radius: 10px;
+  /* margin: 1px; */
 
   background-color: #f5f5f5;
   border: 1px solid ${props => props.theme.colors.primary};
-  box-shadow: 0 0 10px 10px rgba(0,0,0, 0.2);
-  max-width: 20rem;
+  box-shadow: 0 0 10px 10px rgba(0, 0, 0, 0.2);
+  max-width: 17.5rem;
+  max-height: 90%;
   padding: 18px 20px;
-
 
   & > section {
     display: flex;
@@ -99,8 +99,8 @@ export const FormContainer = styled.main`
     align-items: center;
     justify-content: center;
 
-    margin: 10px auto;
-    
+    margin: 0 auto;
+
     padding: 10px;
     font-family: 'Ubuntu', sans-serif;
     div {
@@ -108,4 +108,10 @@ export const FormContainer = styled.main`
     }
   }
 
+  @media only screen and (max-height: 600px) {
+    img {
+      width: 8rem;
+      /* font-size: 10px; */
+    }
+  }
 `;

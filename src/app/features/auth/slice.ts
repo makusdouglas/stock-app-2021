@@ -2,7 +2,7 @@
 
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
 import api from '../../../services/api';
-import type { AppDispatch, AppThunk, RootState } from '../../store/index';
+import type { RootState } from '../../store/index';
 import { SignInPayload } from './types';
 
 // Define a type for the slice state
@@ -20,26 +20,32 @@ interface RequestLoginResponse {
   access_token: string;
 }
 
-export const requestLogin = createAsyncThunk<RequestLoginResponse, SignInPayload>(
-  'auth/requestLogin',
-  async (userData, thunkApi) => {
-    const { email, password } = userData;
-    try {
-      const response = await api.post<RequestLoginResponse>('/oauth/token', {
-        client_id: "3",
-        client_secret: "petruzapiBxwer!294nPqzojd8349",
-        grant_type: "password",
-        email,
-        password,
-      });
-      console.log(response.data);
-      return response.data;
-    } catch (err) {
-      return thunkApi.rejectWithValue({ errorMessage: 'falha no login' });
-    }
-  },
-  {}
-);
+export const requestLogin = createAsyncThunk<
+  RequestLoginResponse,
+  SignInPayload,
+  {
+    rejectValue: MyKnownError;
+  }
+>('auth/requestLogin', async (userData, thunkApi) => {
+  const { email, password } = userData;
+  try {
+    const response = await api.post<RequestLoginResponse>('oauth/token', {
+      client_id: '3',
+      client_secret: 'petruzapiBxwer!294nPqzojd8349',
+      grant_type: 'password',
+      email,
+      password,
+    });
+    console.log('RESPONSE', response.data);
+    return response.data;
+  } catch (err) {
+    console.log(err);
+
+    return thunkApi.rejectWithValue({
+      errorMessage: 'falha no login',
+    });
+  }
+});
 // Define the initial state using that type
 const initialState: AuthState = {
   email: null,
@@ -81,29 +87,26 @@ export const authSlice = createSlice({
   },
 });
 
-export function asyncLogin(props: SignInPayload): AppThunk {
-  return async function (dispatch: AppDispatch) {
-
-    setTimeout(
-      () => dispatch(makeLogin({
-        email: props.email,
-        password: props.password
-      })), 5000)
-    // try {
-    //   const response = await api.post<RequestLoginResponse>('/oauth/token', {
-    //     client_id: "3",
-    //     client_secret: "petruzapiBxwer!294nPqzojd8349",
-    //     grant_type: "password",
-    //     email: props.email,
-    //     password: props.password
-    //   });
-    //   console.log(response.data);
-    //   return response.data;
-    // } catch (err) {
-    //   console.log(err);
-    // }
-  };
-}
+// export function asyncLogin(props: SignInPayload): AppThunk {
+//   return async function (dispatch: AppDispatch) {
+//     try {
+//       const response = await api.post<RequestLoginResponse>(
+//         '/api/oauth/token',
+//         {
+//           client_id: '3',
+//           client_secret: 'petruzapiBxwer!294nPqzojd8349',
+//           grant_type: 'password',
+//           email: props.email,
+//           password: props.password,
+//         }
+//       );
+//       console.log(response.data);
+//       return response.data;
+//     } catch (err) {
+//       console.log(err);
+//     }
+//   };
+// }
 
 export const { makeLogin } = authSlice.actions;
 // Other code such as selectors can use the imported `RootState` type
