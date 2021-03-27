@@ -87,11 +87,12 @@ export const FormContainer = styled.main`
   /* margin: 1px; */
 
   background-color: #f5f5f5;
-  border: 1px solid ${props => props.theme.colors.primary};
+  /* border: 4px solid #aaa; */
+  /* border: 4px solid ${props => props.theme.colors.primary}; */
   box-shadow: 0 0 10px 10px rgba(0, 0, 0, 0.2);
   max-width: 17.5rem;
   max-height: 90%;
-  padding: 18px 20px;
+  padding: 8px 10px;
 
   & > section {
     display: flex;

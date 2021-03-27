@@ -32,7 +32,7 @@ const SignInPage: React.FC = () => {
 
     const onFinishFailed = (errorInfo: SignInFormValidatorErrorsType) => {
         console.log('Failed:', errorInfo);
-        errorInfo.errorFields.map(err => 
+        errorInfo.errorFields.map(err =>
             err.errors.map(error =>
                 notification.error({
                     message: `${err.name}`,
@@ -135,21 +135,20 @@ const SignInPage: React.FC = () => {
                         </Form>
 
                     </Space>
+                    <Divider style={{ margin: 0, marginBottom: 5 }} />
+                    <Footer
+                        style={{
+                            // gridArea: 'footer',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            fontSize: 9,
+                            padding: 0,
+                            backgroundColor: 'transparent',
+                        }}>
+                        <strong>Petruz Web</strong>
+                        ©2021 | Design Sys. by @AntDesign - vBeta 2.0</Footer>
                 </FormContainer>
-            <Footer
-                style={{
-                    // gridArea: 'footer',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    color: 'whitesmoke',
-                    backgroundColor: 'transparent',
-                    // position: 'absolute',
-                    // padding: 0,
-                    // bottom: 10,
-                    // right: 100
-                }}>
-                Petruz WEb App ©2021 Created by Petruz Fruity - v1.4</Footer>
             </RightSide>
         </Container>
     );
