@@ -1,21 +1,24 @@
 import React, { useState } from 'react';
-import { Provider } from 'react-redux';
+import { Provider as ReduxStateProvider } from 'react-redux';
 import { ThemeProvider } from 'styled-components';
 import { BrowserRouter } from 'react-router-dom'
 // import Header from './app/components/HeaderComponent';
 import { DefaultRoutes } from './app/routes';
-import store from './app/store';
+import store, { persistor } from './app/store';
 
 import { GlobalStyle } from './config/GlobalStyle';
 import { LightTheme, DarkTheme } from './themes/StyledTheme';
 import './App.less';
 import { ConfigProvider } from 'antd';
+import { PersistGate as PersistReduxStateGate } from 'redux-persist/integration/react';
 
 
 function App() {
   const [darkMode] = useState<boolean>(false);
   return (
-    <Provider store={store}>
+    <ReduxStateProvider store={store}>
+      {/* TODO: Implements Loading Page for reduxPersistGate */}
+      <PersistReduxStateGate persistor={persistor} loading={null}>
       <ThemeProvider theme={darkMode ? DarkTheme : LightTheme}>
         <GlobalStyle />
         <BrowserRouter>
@@ -24,7 +27,8 @@ function App() {
           </ConfigProvider>
         </BrowserRouter>
       </ThemeProvider>
-    </Provider>
+      </PersistReduxStateGate>
+    </ReduxStateProvider>
   );
 }
 

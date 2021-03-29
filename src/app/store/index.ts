@@ -7,18 +7,32 @@ import {
   ThunkAction,
   ThunkDispatch,
 } from '@reduxjs/toolkit';
-import authReducer from '../features/auth/slice';
 import Logger from 'redux-logger';
+// import rootReducer from './reducers';
+import {
+  FLUSH,
+  REHYDRATE,
+  PAUSE,
+  PERSIST,
+  PURGE,
+  REGISTER,
+  persistStore,
+} from 'redux-persist';
+import persistedRootReducer from './persistConfig';
 
-const middleware = getDefaultMiddleware().concat(Logger);
-const store = configureStore({
-  reducer: {
-    auth: authReducer,
+const middleware = getDefaultMiddleware({
+  serializableCheck: {
+    ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
   },
+}).concat(Logger);
+
+const store = configureStore({
+  reducer: persistedRootReducer,
   middleware,
   devTools: process.env.NODE_ENV !== 'production',
 });
 export default store;
+export const persistor = persistStore(store);
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
 export type RootState = ReturnType<typeof store.getState>;
