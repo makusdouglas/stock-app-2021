@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Typography, Image, Input, Space, Form, Checkbox, Button, Divider, notification } from 'antd'
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 
@@ -9,7 +9,7 @@ import { ValidateErrorEntity } from './types';
 
 // Redux Methods and Types
 import { SignInPayload } from '../../features/auth/types';
-import { useAppDispatch } from '../../store/hooks';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { requestLogin } from '../../features/auth/slice'
 
 
@@ -18,23 +18,31 @@ const SignInPage: React.FC = () => {
     const { Title, Text } = Typography;
     const [signInForm] = Form.useForm<SignInPayload>();
     const dispatch = useAppDispatch();
+    const auth = useAppSelector(state => state.auth);
     const onFinish = async (values: SignInPayload) => {
         console.log('Success');
         console.table(signInForm.getFieldsValue())
         const { email, password, rememberCredentials } = values;
-        await dispatch(requestLogin({
+        dispatch(requestLogin({
             email,
             password,
             rememberCredentials
         })
-        )
+        );
     };
+
+    useEffect(() => {
+        auth.loading === 'failed' && notification.error({
+            message: 'Falha no login',
+            description: 'Verifique suas credenciais de acesso'
+        });
+    }, [auth.loading])
 
     const onFinishFailed = (errorInfo: SignInFormValidatorErrorsType) => {
         console.log('Failed:', errorInfo);
         errorInfo.errorFields.map(err =>
             err.errors.map(error =>
-                notification.error({
+                notification.warning({
                     message: `${err.name}`,
                     description: error
                 }))
@@ -127,7 +135,13 @@ const SignInPage: React.FC = () => {
                                     <Checkbox>Lembrar senha</Checkbox>
                                 </Form.Item>
                                 <Form.Item>
-                                    <Button type="primary" htmlType="submit">
+                                    <Button 
+                                        type="primary" 
+                                        htmlType="submit" 
+                                        loading={auth.loading === 'pending'}
+                                        disabled={auth.loading === 'pending'}
+                                        danger={auth.loading === 'failed'}
+                                    >
                                         Entrar
                                 </Button>
                                 </Form.Item>

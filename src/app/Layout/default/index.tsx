@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import { Layout, Menu, Breadcrumb, Divider } from 'antd';
+import { Layout, Menu, Breadcrumb, Divider, notification } from 'antd';
 import {
   
   LaptopOutlined,
@@ -15,6 +15,7 @@ import { useLocation } from 'react-router';
 import { MenuTitle, SiderStyled } from './styles';
 import { Footer } from 'antd/lib/layout/layout';
 import { Link } from 'react-router-dom';
+import { useAppSelector } from '../../store/hooks';
 // import { purple } from '@ant-design/colors'
 // import { useTheme } from 'styled-components';
 const { SubMenu } = Menu;
@@ -26,11 +27,19 @@ const DefaultLayout: React.FC = ({ children }) => {
   const [menuText, setMenuText] = useState<string>(collapsed ? 'MENU' : 'MENU PRINCIPAL');
   const [title, setTitle] = useState<string>(collapsed ? 'PTZ' : 'Petruz Web')
 
+  const auth = useAppSelector(state => state.auth);
+
   const toggle = () => {
     setCollapsed(!collapsed)
   };
   // const theme = useTheme();
   const location = useLocation();
+  useEffect(() => {
+    auth.loading === 'succeeded' && notification.success({
+        message: 'Bem vindo!',
+        description: 'Seja bem vindo(a) ao Petruz Web 2.0.'
+    })
+}, [auth.loading])
 
   useEffect(() => {
     if (collapsed) {
@@ -106,7 +115,9 @@ const DefaultLayout: React.FC = ({ children }) => {
           </Breadcrumb>
           {children}
         </Content>
-        <Footer style={{ textAlign: 'right' }}>Petruz WEb App ©2021 Created by Petruz Fruity - v1.4</Footer>
+        <Footer style={{ textAlign: 'right' }}>
+          <strong>Petruz Web</strong>
+          ©2021 | Design Sys. by @AntDesign - vBeta 2.0</Footer>
       </Layout>
     </Layout>
   )

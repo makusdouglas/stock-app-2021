@@ -33,7 +33,7 @@ export const requestLogin = createAsyncThunk<
       client_id: '3',
       client_secret: 'petruzapiBxwer!294nPqzojd8349',
       grant_type: 'password',
-      email,
+      username: email,
       password,
     });
     console.log('RESPONSE', response.data);
