@@ -17,7 +17,6 @@ function App() {
   const [darkMode] = useState<boolean>(false);
   return (
     <ReduxStateProvider store={store}>
-      {/* TODO: Implements Loading Page for reduxPersistGate */}
       <PersistReduxStateGate persistor={persistor} loading={null}>
       <ThemeProvider theme={darkMode ? DarkTheme : LightTheme}>
         <GlobalStyle />

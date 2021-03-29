@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import { Layout, Menu, Breadcrumb, Divider, notification } from 'antd';
 import {
-  
+
   LaptopOutlined,
   NotificationOutlined,
   MenuUnfoldOutlined,
@@ -19,27 +19,19 @@ import { useAppSelector } from '../../store/hooks';
 // import { purple } from '@ant-design/colors'
 // import { useTheme } from 'styled-components';
 const { SubMenu } = Menu;
-const { Header, Content, } = Layout;
+const { Header, Content } = Layout;
 
 const DefaultLayout: React.FC = ({ children }) => {
   const [collapsed, setCollapsed] = useState<boolean>(false);
   const [isCollapsed, setIsCollapsed] = useState<boolean>(collapsed);
   const [menuText, setMenuText] = useState<string>(collapsed ? 'MENU' : 'MENU PRINCIPAL');
-  const [title, setTitle] = useState<string>(collapsed ? 'PTZ' : 'Petruz Web')
-
-  const auth = useAppSelector(state => state.auth);
+  const [title, setTitle] = useState<string>(collapsed ? 'PTZ' : 'Petruz Web');
 
   const toggle = () => {
     setCollapsed(!collapsed)
   };
   // const theme = useTheme();
   const location = useLocation();
-  useEffect(() => {
-    auth.loading === 'succeeded' && notification.success({
-        message: 'Bem vindo!',
-        description: 'Seja bem vindo(a) ao Petruz Web 2.0.'
-    })
-}, [auth.loading])
 
   useEffect(() => {
     if (collapsed) {

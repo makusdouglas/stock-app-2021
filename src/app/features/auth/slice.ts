@@ -1,14 +1,13 @@
 /** @format */
 
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
+import { notification } from 'antd';
 import api from '../../../services/api';
 import type { RootState } from '../../store/index';
 import { SignInPayload } from './types';
 
 // Define a type for the slice state
 interface AuthState {
-  email: string | null;
-  password: string | null;
   isAuthenticated: boolean;
   token: string | null;
   loading: false | 'pending' | 'succeeded' | 'failed';
@@ -26,7 +25,7 @@ export const requestLogin = createAsyncThunk<
   {
     rejectValue: MyKnownError;
   }
->('auth/requestLogin', async (userData, thunkApi) => {
+>('auth/requestlogin', async (userData, thunkApi) => {
   const { email, password } = userData;
   try {
     const response = await api.post<RequestLoginResponse>('oauth/token', {
@@ -48,8 +47,6 @@ export const requestLogin = createAsyncThunk<
 });
 // Define the initial state using that type
 const initialState: AuthState = {
-  email: null,
-  password: null,
   isAuthenticated: false,
   loading: false,
   token: null,
@@ -62,27 +59,31 @@ export const authSlice = createSlice({
   reducers: {
     makeLogin: (state, action: PayloadAction<SignInPayload>) => {
       state.isAuthenticated = true;
-      state.email = action.payload.email;
-      state.password = action.payload.password;
+      // state.email = action.payload.email;
+      // state.password = action.payload.password;
     },
   },
   extraReducers: builder => {
     builder.addCase(requestLogin.pending, state => {
       state.loading = 'pending';
     });
-    builder.addCase(requestLogin.fulfilled, (state, action) => {
-      state.email = action.meta.arg.email;
-      state.token = action.payload.access_token;
-      state.isAuthenticated = true;
-      state.password = null;
-      state.loading = 'succeeded';
-    });
     builder.addCase(requestLogin.rejected, (state, action) => {
-      state.email = null;
+      // state.email = null;
+      // state.password = null;
       state.isAuthenticated = false;
       state.loading = 'failed';
       state.token = null;
-      state.password = null;
+    });
+    builder.addCase(requestLogin.fulfilled, (state, action) => {
+      // state.email = action.meta.arg.email;
+      state.token = action.payload.access_token;
+      state.isAuthenticated = true;
+      // state.password = null;
+      state.loading = 'succeeded';
+      notification.success({
+        message: 'Bem vindo!',
+        description: 'Seja bem vindo(a) ao Petruz Web 2.0.'
+      });
     });
   },
 });
@@ -110,6 +111,5 @@ export const authSlice = createSlice({
 
 export const { makeLogin } = authSlice.actions;
 // Other code such as selectors can use the imported `RootState` type
-export const selectCount = (state: RootState) => state.auth;
 
 export default authSlice.reducer;

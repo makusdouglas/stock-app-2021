@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Typography, Image, Input, Space, Form, Checkbox, Button, Divider, notification } from 'antd'
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 
@@ -23,20 +23,18 @@ const SignInPage: React.FC = () => {
         console.log('Success');
         console.table(signInForm.getFieldsValue())
         const { email, password, rememberCredentials } = values;
-        dispatch(requestLogin({
+        const authResult = await dispatch(requestLogin({
             email,
             password,
             rememberCredentials
         })
         );
-    };
-
-    useEffect(() => {
-        auth.loading === 'failed' && notification.error({
+        authResult.meta.requestStatus === 'rejected' && notification.error({
             message: 'Falha no login',
             description: 'Verifique suas credenciais de acesso'
         });
-    }, [auth.loading])
+    };
+
 
     const onFinishFailed = (errorInfo: SignInFormValidatorErrorsType) => {
         console.log('Failed:', errorInfo);
@@ -135,12 +133,12 @@ const SignInPage: React.FC = () => {
                                     <Checkbox>Lembrar senha</Checkbox>
                                 </Form.Item>
                                 <Form.Item>
-                                    <Button 
-                                        type="primary" 
-                                        htmlType="submit" 
+                                    <Button
+                                        type="primary"
+                                        htmlType="submit"
                                         loading={auth.loading === 'pending'}
-                                        disabled={auth.loading === 'pending'}
-                                        danger={auth.loading === 'failed'}
+                                    // disabled={auth.loading === 'pending'}
+                                    // danger={auth.loading === 'failed'}
                                     >
                                         Entrar
                                 </Button>
