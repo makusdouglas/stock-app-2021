@@ -12,20 +12,21 @@ import './App.less';
 import { ConfigProvider } from 'antd';
 import { PersistGate as PersistReduxStateGate } from 'redux-persist/integration/react';
 
-
 function App() {
+
+
   const [darkMode] = useState<boolean>(false);
   return (
     <ReduxStateProvider store={store}>
       <PersistReduxStateGate persistor={persistor} loading={null}>
-      <ThemeProvider theme={darkMode ? DarkTheme : LightTheme}>
-        <GlobalStyle />
-        <BrowserRouter>
-          <ConfigProvider direction="ltr" >
-            <DefaultRoutes />
-          </ConfigProvider>
-        </BrowserRouter>
-      </ThemeProvider>
+        <ThemeProvider theme={darkMode ? DarkTheme : LightTheme}>
+          <GlobalStyle />
+          <BrowserRouter>
+            <ConfigProvider direction="ltr" >
+              <DefaultRoutes />
+            </ConfigProvider>
+          </BrowserRouter>
+        </ThemeProvider>
       </PersistReduxStateGate>
     </ReduxStateProvider>
   );

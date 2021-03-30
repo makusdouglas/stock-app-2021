@@ -8,20 +8,18 @@ import { Footer } from 'antd/lib/layout/layout';
 import { ValidateErrorEntity } from './types';
 
 // Redux Methods and Types
-import { SignInPayload } from '../../features/auth/types';
+import { IAuthState } from '../../features/auth/types';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { requestLogin } from '../../features/auth/slice'
 
 
-type SignInFormValidatorErrorsType = ValidateErrorEntity<SignInPayload>;
+type SignInFormValidatorErrorsType = ValidateErrorEntity<IAuthState>;
 const SignInPage: React.FC = () => {
     const { Title, Text } = Typography;
-    const [signInForm] = Form.useForm<SignInPayload>();
+    const [signInForm] = Form.useForm<IAuthState>();
     const dispatch = useAppDispatch();
     const auth = useAppSelector(state => state.auth);
-    const onFinish = async (values: SignInPayload) => {
-        console.log('Success');
-        console.table(signInForm.getFieldsValue())
+    const onFinish = async (values: IAuthState) => {
         const { email, password, rememberCredentials } = values;
         const authResult = await dispatch(requestLogin({
             email,
@@ -85,7 +83,7 @@ const SignInPage: React.FC = () => {
                         </Divider>
                         {/* <Title level={3} style={{ marginBottom: 0 }}>Login</Title> */}
                         <Text type="secondary">Insira seus dados abaixo:</Text>
-                        <Form<SignInPayload>
+                        <Form<IAuthState>
                             form={signInForm}
                             initialValues={{ rememberCredentials: false }}
                             onFinish={onFinish}
@@ -113,7 +111,7 @@ const SignInPage: React.FC = () => {
 
                                 rules={[
                                     { required: true, message: 'Por favor, insira sua senha.' },
-                                    { type: 'string', min: 6, message: 'test' }
+                                    { type: 'string', min: 6, message: 'No mínimo 6 caracteres.' }
                                 ]}
                             >
                                 <Input.Password

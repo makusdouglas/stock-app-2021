@@ -1,7 +1,7 @@
 /** @format */
 
 import styled from 'styled-components';
-import { Layout } from 'antd';
+import { Layout, Space } from 'antd';
 const { Sider, Footer } = Layout;
 
 export const SiderStyled = styled(Sider)`
@@ -32,5 +32,34 @@ export const MenuTitle = styled.div.attrs({}) <MenuTitleProps>`
     font-weight: normal;
     
     margin: 0;
+  }
+
+  `;
+export const UserPopupHeader = styled.div`
+  background-color: ${props => props.theme.colors.primary};
+  min-height: 50px;
+  position: relative;
+
+  display: flex;
+  align-items: center;
+`;
+export const UserPopupBody = styled.div`
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  
+`; export const UserPopupFooter = styled.div`
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+`;
+export const StyledSpace = styled(Space)`
+  display: flex;
+  flex-direction: row;
+  & > .ant-space-item {
+    display: flex;
   }
 `;

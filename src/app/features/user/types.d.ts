@@ -5,6 +5,7 @@ export interface IUserState {
     fabrica: number | null;
     permissions: string[];
     loading: false | 'pending' | 'succeeded' | 'failed';
+    initials: string | null;
 }
 
 export interface RequestUserResponseType {

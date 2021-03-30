@@ -1,117 +1,131 @@
 import React, { useEffect, useState } from 'react';
 
-import { Layout, Menu, Breadcrumb, Divider, notification } from 'antd';
+import { Layout, Menu, Breadcrumb, Divider, Avatar, Badge, Popover, Space } from 'antd';
 import {
-
-  LaptopOutlined,
-  NotificationOutlined,
   MenuUnfoldOutlined,
-  DashboardOutlined,
   MenuFoldOutlined,
+
 } from '@ant-design/icons';
+import { RiArrowDropDownFill, RiArrowDropUpFill } from 'react-icons/ri';
+import { GiFactory } from 'react-icons/gi';
+
 import './index.less'
 import { StyledLink } from '../../components/HeaderComponent/styles';
 import { useLocation } from 'react-router';
-import { MenuTitle, SiderStyled } from './styles';
+import { SiderStyled, StyledSpace } from './styles';
 import { Footer } from 'antd/lib/layout/layout';
-import { Link } from 'react-router-dom';
-import { useAppSelector } from '../../store/hooks';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { requestUserData } from '../../features/user/slice';
+import Loading from '../../components/Loading';
+import { BodyPopover, HeaderPopover } from './acountPopover';
+import SideMenu from './sideMenu';
 // import { purple } from '@ant-design/colors'
 // import { useTheme } from 'styled-components';
-const { SubMenu } = Menu;
 const { Header, Content } = Layout;
+
 
 const DefaultLayout: React.FC = ({ children }) => {
   const [collapsed, setCollapsed] = useState<boolean>(false);
-  const [isCollapsed, setIsCollapsed] = useState<boolean>(collapsed);
-  const [menuText, setMenuText] = useState<string>(collapsed ? 'MENU' : 'MENU PRINCIPAL');
+
   const [title, setTitle] = useState<string>(collapsed ? 'PTZ' : 'Petruz Web');
+
+  // Avatar props
+  const [oppenedAvatarPopup, seetOppenedAvatarPopup] = useState<boolean>(false);
 
   const toggle = () => {
     setCollapsed(!collapsed)
   };
   // const theme = useTheme();
   const location = useLocation();
+  const { user } = useAppSelector(state => state);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(requestUserData());
+  }, [])
 
   useEffect(() => {
     if (collapsed) {
-      setMenuText('MENU');
-      setIsCollapsed(true);
       setTitle('PTZ');
     } else {
       setTimeout(() => {
-        setMenuText('MENU PRINCIPAL');
-        setIsCollapsed(false);
         setTitle('Petruz Web');
       }, 100);
     }
   }, [collapsed])
+
   return (
-    <Layout style={{ minHeight: '100vh' }}>
-      <SiderStyled width={200} trigger={null} collapsible collapsed={collapsed} onCollapse={(coll => setCollapsed(coll))}>
-        <div className="logo">
-          <h1>{title}</h1>
-        </div>
-        {/* <Divider style={{ borderColor: '#444', margin: 0 }} /> */}
-        <Menu
-          theme='dark'
-          mode='inline'
-          defaultSelectedKeys={['1']}
-          defaultOpenKeys={['sub1']}
-        >
-          <MenuTitle collapsed={isCollapsed}>
-            <h4>{menuText}</h4>
-          </MenuTitle>
-          <Menu.Item key="sub1" icon={<DashboardOutlined />}>
-            <Link to='/dashboard'>Dashboard</Link>
-          </Menu.Item>
-          <SubMenu key="sub1" icon={<DashboardOutlined />} title="Dashboard">
-            <Menu.ItemGroup key="g1" title="Dashboard">
-              <Menu.Item key="1">option1</Menu.Item>
-              <Menu.Item key="2">option2</Menu.Item>
-              <Menu.Item key="3">option3</Menu.Item>
-              <Menu.Item key="4">option4</Menu.Item>
-            </Menu.ItemGroup>
-          </SubMenu>
-          <SubMenu key="sub2" icon={<LaptopOutlined />} title="subnav 2">
-            <Menu.Item key="5">option5</Menu.Item>
-            <Menu.Item key="6">option6</Menu.Item>
-            <Menu.Item key="7">option7</Menu.Item>
-            <Menu.Item key="8">option8</Menu.Item>
-          </SubMenu>
-          <SubMenu key="sub3" icon={<NotificationOutlined />} title="subnav 3">
-            <Menu.Item key="9">option9</Menu.Item>
-            <Menu.Item key="10">option10</Menu.Item>
-            <Menu.Item key="11">option11</Menu.Item>
-            <Menu.Item key="12">option12</Menu.Item>
-          </SubMenu>
-        </Menu>
-      </SiderStyled>
-      <Layout>
-        <Header className="header" style={{ padding: 0, backgroundColor: '#fff' }}>
-          <Menu theme="light" mode="horizontal" className="site-layout-background" defaultSelectedKeys={[location.pathname]} >
-            {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
-              className: 'trigger',
-              onClick: toggle,
-            })}
-            <Menu.Item key="/home" ><StyledLink to='/home' >Home</StyledLink></Menu.Item>
-            <Divider type="vertical" />
-            <Menu.Item key="/profile" ><StyledLink to='/profile'>Profile</StyledLink></Menu.Item>
-          </Menu>
-        </Header>
-        <Content style={{ margin: '0 16px' }}>
-          <Breadcrumb style={{ margin: '16px 0' }}>
-            <Breadcrumb.Item>Home</Breadcrumb.Item>
-            <Breadcrumb.Item>List</Breadcrumb.Item>
-            <Breadcrumb.Item>App</Breadcrumb.Item>
-          </Breadcrumb>
-          {children}
-        </Content>
-        <Footer style={{ textAlign: 'right' }}>
-          <strong>Petruz Web</strong>
+    <React.Fragment>
+      {user.loading === 'succeeded' ?
+        <Layout style={{ minHeight: '100vh' }}>
+          <SiderStyled width={200} trigger={null} collapsible collapsed={collapsed} onCollapse={(coll => setCollapsed(coll))}>
+            <div className="logo">
+              <h1>{title}</h1>
+            </div>
+            {/* <Divider style={{ borderColor: '#444', margin: 0 }} /> */}
+            <SideMenu collapsed={collapsed} />
+          </SiderStyled>
+          <Layout>
+            <Header
+              className="header"
+              style={
+                {
+                  padding: 0,
+                  backgroundColor: '#fff',
+                  display: 'flex',
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  alignItems: 'center'
+                }
+              }>
+
+              <Menu theme="light" mode="horizontal" className="site-layout-background" defaultSelectedKeys={[location.pathname]} >
+                {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
+                  className: 'trigger',
+                  onClick: toggle,
+                })}
+                <Menu.Item key="/home" ><StyledLink to='/home' >Home</StyledLink></Menu.Item>
+                <Divider type="vertical" />
+                <Menu.Item key="/profile" ><StyledLink to='/profile'>Profile</StyledLink></Menu.Item>
+
+              </Menu>
+              <StyledSpace direction='horizontal' size='middle' align='center' >
+                <Badge>
+                  <GiFactory size={24} color={'#53284F'} />
+                  <RiArrowDropDownFill size={24} />
+                </Badge>
+                <Popover
+                  placement="bottomRight"
+                  title={HeaderPopover} content={BodyPopover}
+                  trigger='click'
+                  onVisibleChange={(visible) => seetOppenedAvatarPopup(!oppenedAvatarPopup)}
+                >
+                  <span className="avatar-item" style={{ cursor: 'pointer', display: 'flex', alignItems: 'center' }}>
+                    <Badge count={1} style={{ marginRight: 5 }}>
+                      <Avatar shape="square">{user.initials}</Avatar>
+                    </Badge>
+                    {oppenedAvatarPopup ? <RiArrowDropUpFill size={24} /> : <RiArrowDropDownFill size={24} />}
+                  </span>
+                </Popover>
+              </StyledSpace>
+            </Header>
+            <Content style={{ margin: '0 16px' }}>
+              <Breadcrumb style={{ margin: '16px 0' }}>
+                <Breadcrumb.Item>Home</Breadcrumb.Item>
+                <Breadcrumb.Item>List</Breadcrumb.Item>
+                <Breadcrumb.Item>App</Breadcrumb.Item>
+              </Breadcrumb>
+              {children}
+            </Content>
+            <Footer style={{ textAlign: 'right' }}>
+              <strong>Petruz Web</strong>
           ©2021 | Design Sys. by @AntDesign - vBeta 2.0</Footer>
-      </Layout>
-    </Layout>
+          </Layout>
+        </Layout>
+        : // if user is not fetched, page returns loading component
+        <Loading />
+      }
+    </React.Fragment>
   )
 }
 

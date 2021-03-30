@@ -1,10 +1,8 @@
 /** @format */
 
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
-import { notification } from 'antd';
 import api from '../../../services/api';
-import type { RootState } from '../../store/index';
-import { SignInPayload } from './types';
+import { IAuthState } from './types';
 
 // Define a type for the slice state
 interface AuthState {
@@ -21,7 +19,7 @@ interface RequestLoginResponse {
 
 export const requestLogin = createAsyncThunk<
   RequestLoginResponse,
-  SignInPayload,
+  IAuthState,
   {
     rejectValue: MyKnownError;
   }
@@ -57,11 +55,15 @@ export const authSlice = createSlice({
   // `createSlice` will infer the state type from the `initialState` argument
   initialState,
   reducers: {
-    makeLogin: (state, action: PayloadAction<SignInPayload>) => {
+    makeLogin: (state, action: PayloadAction<IAuthState>) => {
       state.isAuthenticated = true;
       // state.email = action.payload.email;
       // state.password = action.payload.password;
     },
+    makeLogout: (state) => {
+      state.token = null;
+      state.isAuthenticated = false;
+    }
   },
   extraReducers: builder => {
     builder.addCase(requestLogin.pending, state => {
@@ -80,10 +82,6 @@ export const authSlice = createSlice({
       state.isAuthenticated = true;
       // state.password = null;
       state.loading = 'succeeded';
-      notification.success({
-        message: 'Bem vindo!',
-        description: 'Seja bem vindo(a) ao Petruz Web 2.0.'
-      });
     });
   },
 });
@@ -109,7 +107,7 @@ export const authSlice = createSlice({
 //   };
 // }
 
-export const { makeLogin } = authSlice.actions;
+export const { makeLogin, makeLogout } = authSlice.actions;
 // Other code such as selectors can use the imported `RootState` type
 
 export default authSlice.reducer;
