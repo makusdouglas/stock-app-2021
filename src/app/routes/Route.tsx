@@ -18,7 +18,7 @@ const RouteWrapper = (props: PrivateRouteProps) => {
         undefinedRoute,
         ...rest
     } = props;
-    const {isAuthenticated} = useAppSelector(state => state.auth);
+    const { isAuthenticated } = useAppSelector(state => state.auth);
     //   const { signed } = store.getState().auth;
 
     if (!isAuthenticated && isPrivate) {
@@ -31,7 +31,7 @@ const RouteWrapper = (props: PrivateRouteProps) => {
         return <Redirect to="/" />;
     }
     if (undefinedRoute && isAuthenticated) {
-        return <Redirect to="/dashboard" />;
+        return <Redirect to="/404" />;
     }
     const Layout = isAuthenticated ? DefaultLayout : AuthLeyout;
 

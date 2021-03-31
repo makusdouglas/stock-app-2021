@@ -1,26 +1,27 @@
+import { Button, Result } from 'antd';
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import { Button, Result } from 'antd';
 import { Container } from './styles';
 
-const NotFoudPage: React.FC = () => {
+const NoPermissionPage: React.FC = () => {
   return (
     <Container>
       <Result
-        status="404"
-        title="404"
-        subTitle="Desculpe, a página solicitada não existe."
+        status="403"
+        title="Sem permissão"
+        subTitle="Você não posssui acesso ao recurso solicitado, Entre em contato com o suporte"
         extra={
           <Link to='home'>
             <Button type="primary" target='home'>
               Início
-        </Button>
+          </Button>
           </Link>
         }
-      />
+      >
+      </Result>
     </Container>
   );
 }
 
-export default NotFoudPage;
+export default NoPermissionPage;

@@ -30,7 +30,7 @@ const DashboardModule: React.FC = () => {
         },
     };
     return (
-        <ContentBox>
+        <ContentBox cProps={{ minHeight: 400 }}>
             <h1>Dashboard</h1>
             <Line {...config} />
         </ContentBox>
