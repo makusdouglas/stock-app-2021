@@ -2,7 +2,9 @@
 
 import {
   Action,
+  AsyncThunkAction,
   configureStore,
+  createAsyncThunk,
   getDefaultMiddleware,
   ThunkAction,
   ThunkDispatch,
@@ -46,3 +48,11 @@ export type AppThunk = ThunkAction<void, RootState, null, Action<string>>;
 export type ThunkResult<R> = ThunkAction<R, RootState, null, Action<string>>;
 
 export type DispatchThunk = ThunkDispatch<RootState, null, Action<string>>;
+
+export type AsyncThunkAPIConfig<Extra = unknown, RejectType = unknown, SerializedError = unknown> = {
+  state: RootState;
+  dispatch: DispatchThunk;
+  extra?: Extra;
+  rejectValue?: RejectType;
+  serializedErrorType?: SerializedError;
+};

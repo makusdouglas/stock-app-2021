@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 
-import { Menu } from 'antd';
+import { Menu, Avatar, Space, Button } from 'antd';
 import { Link } from 'react-router-dom';
-import { DashboardOutlined, LaptopOutlined, NotificationOutlined } from '@ant-design/icons'
-import { MenuTitle } from './styles';
+import { DashboardOutlined, LaptopOutlined, NotificationOutlined, UserOutlined, SettingOutlined } from '@ant-design/icons'
+import { IconButton, MenuTitle, MenuUserInfo } from './styles';
+import { useAppSelector } from '../../store/hooks';
 // import { Container } from './styles';
 const { SubMenu } = Menu;
 interface MenuProps {
@@ -13,6 +14,8 @@ const SideMenu: React.FC<MenuProps> = ({ collapsed }) => {
 
     const [menuText, setMenuText] = useState<string>(collapsed ? 'MENU' : 'MENU PRINCIPAL');
     const [isCollapsed, setIsCollapsed] = useState<boolean>(collapsed);
+
+    const { firstName, lastName } = useAppSelector(state => state.user);
 
     useEffect(() => {
         if (collapsed) {
@@ -33,6 +36,28 @@ const SideMenu: React.FC<MenuProps> = ({ collapsed }) => {
                 defaultSelectedKeys={['1']}
                 defaultOpenKeys={['sub1']}
             >
+                <MenuUserInfo collapsed={isCollapsed}>
+                    <Space direction='horizontal'>
+                        <Avatar icon={<UserOutlined />} />
+                        {!isCollapsed && <Space direction='vertical'>
+                            <h4>{firstName !== lastName ? `${firstName} ${lastName}` : firstName}</h4>
+                            <div
+                                style={{
+                                    display: 'flex',
+                                    flexDirection: 'row',
+                                    alignItems: 'center',
+                                    justifyContent: 'space-between'
+                                }}
+                            >
+                                <h6>BELA IAÇA</h6>
+                                <IconButton
+                                    shape='circle'
+                                    children={<SettingOutlined size={20} />}
+                                />
+                            </div>
+                        </Space>}
+                    </Space>
+                </MenuUserInfo>
                 <MenuTitle collapsed={isCollapsed}>
                     <h4>{menuText}</h4>
                 </MenuTitle>

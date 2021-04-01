@@ -6,9 +6,11 @@ export interface IUserState {
     permissions: string[];
     loading: false | 'pending' | 'succeeded' | 'failed';
     initials: string | null;
+    firstName: string | null;
+    lastName: string | null;
 }
 
-export interface RequestUserResponseType {
+export interface ResponseUserRequest {
     data: {
         id: number,
         name: string,
@@ -26,4 +28,12 @@ export interface RequestUserResponseType {
         codsetor: number,
         data_nascimento: Date
     }
+}
+
+type Fabrica = {
+    codigo: number,
+    descricao: string
+}
+export interface ResponseFactoryRequest {
+    data: Fabrica[],
 }

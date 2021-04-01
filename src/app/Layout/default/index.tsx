@@ -4,7 +4,7 @@ import { Layout, Breadcrumb } from 'antd';
 
 
 
-import './index.less'
+import './index.less';
 import { SiderStyled } from './styles';
 import { Footer } from 'antd/lib/layout/layout';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
@@ -12,8 +12,7 @@ import { requestUserData } from '../../features/user/slice';
 import Loading from '../../components/Loading';
 import SideMenu from './sideMenu';
 import HeaderStyled from './header';
-// import { purple } from '@ant-design/colors'
-// import { useTheme } from 'styled-components';
+
 const { Content } = Layout;
 
 
