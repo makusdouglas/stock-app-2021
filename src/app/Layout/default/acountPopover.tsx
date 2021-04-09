@@ -4,7 +4,7 @@ import { UserOutlined, ExportOutlined } from '@ant-design/icons'
 import React from 'react';
 import { UserPopupBody, UserPopupFooter, UserPopupHeader } from './styles';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { makeLogout } from '../../features/auth/slice';
+import { makeLogout } from '../../modules/SignIn/slice';
 const { Title, Text } = Typography;
 export const HeaderPopover: React.FC = () => (
     <UserPopupHeader>

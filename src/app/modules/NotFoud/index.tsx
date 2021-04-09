@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { Button, Result } from 'antd';
 import { Container } from './styles';
 
-const NotFoudPage: React.FC = () => {
+const NotFoud: React.FC = () => {
   return (
     <Container>
       <Result
@@ -23,4 +23,4 @@ const NotFoudPage: React.FC = () => {
   );
 }
 
-export default NotFoudPage;
+export default NotFoud;

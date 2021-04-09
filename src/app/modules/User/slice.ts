@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { notification } from "antd";
 import api from "../../../services/api";
 import { AsyncThunkAPIConfig, DispatchThunk, RootState, ThunkResult } from "../../store";
-import { makeLogout } from "../auth/slice";
+import { makeLogout } from "../SignIn/slice";
 import { IUserState, ResponseUserRequest, ResponseFactoryRequest } from "./types";
 
 // Async Thunks

@@ -8,7 +8,7 @@ import './index.less';
 import { SiderStyled } from './styles';
 import { Footer } from 'antd/lib/layout/layout';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { requestUserData } from '../../features/user/slice';
+import { requestUserData } from '../../modules/User/slice';
 import Loading from '../../components/Loading';
 import SideMenu from './sideMenu';
 import HeaderStyled from './header';

@@ -9,7 +9,7 @@ import {
 
 } from '@ant-design/icons';
 import { RiArrowDropDownFill, RiArrowDropUpFill } from 'react-icons/ri';
-import { GiFactory } from 'react-icons/gi';
+
 
 import { StyledLink } from '../../components/HeaderComponent/styles';
 import { StyledSpace } from './styles';
@@ -55,10 +55,6 @@ const HeaderStyled: React.FC<IHeaderProps> = ({ collapsed, toggle }) => {
 
             </Menu>
             <StyledSpace direction='horizontal' size='middle' align='center' >
-                <Badge>
-                    <GiFactory size={24} color={'#53284F'} />
-                    <RiArrowDropDownFill size={24} />
-                </Badge>
                 <Popover
                     placement="bottomRight"
                     title={HeaderPopover} content={BodyPopover}

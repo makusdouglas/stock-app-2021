@@ -3,10 +3,11 @@ import { } from 'antd';
 import { Line } from '@ant-design/charts';
 
 import ContentBox from '../../components/ContentBox';
+import { LineConfig } from '@ant-design/charts/es/line';
 
 // import { Container } from './styles';
 
-const DashboardModule: React.FC = () => {
+const Dashboard: React.FC = () => {
     const data = [
         { year: '1991', value: 3 },
         { year: '1992', value: 4 },
@@ -19,15 +20,16 @@ const DashboardModule: React.FC = () => {
         { year: '1999', value: 13 },
     ];
 
-    const config = {
+    const config: LineConfig = {
         data,
         height: 400,
         xField: 'year',
         yField: 'value',
         point: {
-            size: 5,
+            size: 6,
             shape: 'diamond',
         },
+
     };
     return (
         <ContentBox cProps={{ minHeight: 400 }}>
@@ -37,4 +39,4 @@ const DashboardModule: React.FC = () => {
     );
 }
 
-export default DashboardModule;
+export default Dashboard;

@@ -1,8 +1,8 @@
 /** @format */
 
 import { combineReducers } from 'redux';
-import authReducer from '../features/auth/slice';
-import userReducer from '../features/user/slice';
+import authReducer from '../modules/SignIn/slice';
+import userReducer from '../modules/User/slice';
 
 const rootReducer = combineReducers({
   auth: authReducer,

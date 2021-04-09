@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 import { Container } from './styles';
 
-const NoPermissionPage: React.FC = () => {
+const NoPermission: React.FC = () => {
   return (
     <Container>
       <Result
@@ -24,4 +24,4 @@ const NoPermissionPage: React.FC = () => {
   );
 }
 
-export default NoPermissionPage;
+export default NoPermission;

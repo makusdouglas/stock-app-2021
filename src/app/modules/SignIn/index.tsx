@@ -8,13 +8,13 @@ import { Footer } from 'antd/lib/layout/layout';
 import { ValidateErrorEntity } from './types';
 
 // Redux Methods and Types
-import { IAuthState } from '../../features/auth/types';
+import { IAuthState } from './types';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { requestLogin } from '../../features/auth/slice'
+import { requestLogin } from './slice'
 
 
 type SignInFormValidatorErrorsType = ValidateErrorEntity<IAuthState>;
-const SignInPage: React.FC = () => {
+const SignIn: React.FC = () => {
     const { Title, Text } = Typography;
     const [signInForm] = Form.useForm<IAuthState>();
     const dispatch = useAppDispatch();
@@ -164,4 +164,4 @@ const SignInPage: React.FC = () => {
     );
 }
 
-export default SignInPage;
+export default SignIn;

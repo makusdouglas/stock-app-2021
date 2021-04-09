@@ -1,0 +1,1 @@
+docker run -it -p 3000:3000 --rm -v c:\projects\petruzwebreact:/home/node/app --name "pwa" pwapp_react

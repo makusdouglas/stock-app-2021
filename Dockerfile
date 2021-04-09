@@ -8,7 +8,9 @@ USER node
 
 COPY --chown=node:node . .
 
-EXPOSE 3000
 
-ENTRYPOINT [ ".docker/entrypoint.sh" ]
+EXPOSE 3000
+RUN npm install
+
+ENTRYPOINT [ "npm", "run", "start" ]
 
