@@ -7,11 +7,11 @@ import { Layout, Breadcrumb } from 'antd';
 import './index.less';
 import { SiderStyled } from './styles';
 import { Footer } from 'antd/lib/layout/layout';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { requestUserData } from '../../modules/User/slice';
-import Loading from '../../components/Loading';
 import SideMenu from './sideMenu';
 import HeaderStyled from './header';
+import { useAppDispatch, useAppSelector } from '@Store/hooks';
+import { requestUserData } from '@Module/User/slice';
+import Loading from '@Components/Loading';
 
 const { Content } = Layout;
 
@@ -31,6 +31,7 @@ const DefaultLayout: React.FC = ({ children }) => {
 
   useEffect(() => {
     dispatch(requestUserData());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useEffect(() => {

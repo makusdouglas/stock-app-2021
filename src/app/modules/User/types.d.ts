@@ -1,4 +1,5 @@
 export interface IUserState {
+    id: string | number | null;
     name: string | null;
     email: string | null;
     birth: Date | null;
@@ -7,6 +8,7 @@ export interface IUserState {
     loading: false | 'pending' | 'succeeded' | 'failed';
     initials: string | null;
     firstName: string | null;
+    active: boolean;
     lastName: string | null;
 }
 
@@ -22,7 +24,7 @@ export interface ResponseUserRequest {
         lastChange: Date,
         deletedDate: null,
         user_name: string,
-        status: number,
+        status: string,
         foto: string,
         codfabrica: number,
         codsetor: number,

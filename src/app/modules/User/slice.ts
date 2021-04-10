@@ -64,6 +64,7 @@ export const requestFabricas = createAsyncThunk<ResponseFactoryRequest, void, As
 
 
 const initialState: IUserState = {
+    id: null,
     email: '',
     name: '',
     permissions: [],
@@ -72,7 +73,8 @@ const initialState: IUserState = {
     loading: false,
     initials: 'PT',
     firstName: null,
-    lastName: null
+    lastName: null,
+    active: false
 }
 const userSlice = createSlice({
     name: 'user',
@@ -85,6 +87,7 @@ const userSlice = createSlice({
             state.loading = 'failed'
         },
         userFetchSucceeded: (state, { payload }: PayloadAction<IUserState>) => {
+            state.id = payload.id;
             state.name = payload.name;
             state.email = payload.email;
             state.fabrica = payload.fabrica;
@@ -101,11 +104,12 @@ const userSlice = createSlice({
         })
 
         builder.addCase(requestUserData.fulfilled, (state, { payload }) => {
+            state.id = payload.data.id;
             state.email = payload.data.email;
             state.name = payload.data.full_name;
             state.fabrica = payload.data.codfabrica;
             state.birth = payload.data.data_nascimento;
-            state.loading = 'succeeded';
+            state.active = (payload.data.status === '1')
 
             // Split Initials of name
             let splitedName = payload.data.name.trim().split(' ');
@@ -116,6 +120,8 @@ const userSlice = createSlice({
             state.initials = `${firstLetter + secondLetter}`;
             state.firstName = firstName;
             state.lastName = lastName;
+
+            state.loading = 'succeeded';
 
             notification.success({
                 message: `Olá, ${state.name}!`,

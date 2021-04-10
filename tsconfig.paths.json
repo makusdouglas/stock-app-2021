@@ -1,0 +1,31 @@
+{
+    "compilerOptions": {
+        "baseUrl": ".",
+        "paths": {
+            "@Module/*": [
+                "./src/app/modules/*"
+            ],
+            "@Config/*": [
+                "./src/config/*"
+            ],
+            "@Services/*": [
+                "./src/services/*"
+            ],
+            "@Store/*": [
+                "./src/app/store/*"
+            ],
+            "@App/*": [
+                "./src/app/*"
+            ],
+            "@Routes/*": [
+                "./src/app/routes/*"
+            ],
+            "@Components/*": [
+                "./src/app/components/*"
+            ],
+            "@Utils/*": [
+                "./src/utils/*"
+            ]
+        }
+    }
+}

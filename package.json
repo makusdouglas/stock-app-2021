@@ -65,6 +65,8 @@
     "@types/react-router-dom": "^5.1.7",
     "@types/redux-logger": "^3.0.8",
     "@types/redux-persist": "^4.3.1",
-    "@types/styled-components": "^5.1.7"
+    "@types/styled-components": "^5.1.7",
+    "craco-alias": "^2.2.0",
+    "tsconfig-paths": "^3.9.0"
   }
 }

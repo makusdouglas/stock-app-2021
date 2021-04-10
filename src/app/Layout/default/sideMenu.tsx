@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import { Menu, Avatar, Space, Button } from 'antd';
+import { Menu, Avatar, Space } from 'antd';
 import { Link } from 'react-router-dom';
 import { DashboardOutlined, LaptopOutlined, NotificationOutlined, UserOutlined, SettingOutlined } from '@ant-design/icons'
 import { IconButton, MenuTitle, MenuUserInfo } from './styles';
