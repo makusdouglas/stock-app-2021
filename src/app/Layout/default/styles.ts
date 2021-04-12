@@ -45,7 +45,7 @@ export const MenuTitle = styled.div.attrs({}) <MenuTitleProps>`
   align-items: center;
   
   h4 {
-    color: #555;
+    color: #999;
     font-weight: normal;
     
     margin: 0;

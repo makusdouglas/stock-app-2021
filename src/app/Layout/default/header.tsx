@@ -49,9 +49,9 @@ const HeaderStyled: React.FC<IHeaderProps> = ({ collapsed, toggle }) => {
                     className: 'trigger',
                     onClick: toggle,
                 })}
-                <Menu.Item key="/home" ><StyledLink to='/home' >Home</StyledLink></Menu.Item>
+                {/* <Menu.Item key="/home" ><StyledLink to='/home' >Home</StyledLink></Menu.Item>
                 <Divider type="vertical" />
-                <Menu.Item key="/profile" ><StyledLink to={encodeURI(`/user/${'Markus Douglas'}/profile`)}>Profile</StyledLink></Menu.Item>
+                <Menu.Item key="/profile" ><StyledLink to='/user/profile'>Profile</StyledLink></Menu.Item> */}
 
             </Menu>
             <StyledSpace direction='horizontal' size='middle' align='center' >

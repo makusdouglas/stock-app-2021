@@ -1,5 +1,6 @@
 /** @format */
 
+import { setShowToast } from '@Module/Application/slice';
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
 import api from '../../../services/api';
 import { IAuthState } from './types';
@@ -33,11 +34,10 @@ export const requestLogin = createAsyncThunk<
       username: email,
       password,
     });
-    console.log('RESPONSE', response.data);
+    thunkApi.dispatch(setShowToast({ showToast: true }))
     return response.data;
   } catch (err) {
     console.log(err);
-
     return thunkApi.rejectWithValue({
       errorMessage: 'falha no login',
     });

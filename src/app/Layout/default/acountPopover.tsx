@@ -5,6 +5,7 @@ import React from 'react';
 import { UserPopupBody, UserPopupFooter, UserPopupHeader } from './styles';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { makeLogout } from '../../modules/SignIn/slice';
+import { Link } from 'react-router-dom';
 const { Title, Text } = Typography;
 export const HeaderPopover: React.FC = () => (
     <UserPopupHeader>
@@ -25,9 +26,11 @@ export const BodyPopover: React.FC = () => {
             </UserPopupBody>
             <Divider style={{ marginBottom: '8px' }} />
             <UserPopupFooter>
-                <Button size='small' icon={<UserOutlined />}>
-                    Perfil
-        </Button>
+                <Link to='/user/profile/0' >
+                    <Button size='small' icon={<UserOutlined />}>
+                        Perfil
+                    </Button>
+                </Link>
                 <Button
                     danger
                     size='small'

@@ -6,7 +6,8 @@ const Routes: React.FC = () => {
     console.log({ path, url });
     return (
         <Switch>
-            <Route path={path + '/:id/profile'} component={Profile}></Route>
+            <Route path={path + '/profile/:tab'} component={Profile}></Route>
+            <Route path={path + '/profile'} component={Profile}></Route>
         </Switch>
     )
 }

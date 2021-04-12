@@ -18,7 +18,7 @@ import {
   PERSIST,
   PURGE,
   REGISTER,
-  persistStore,
+  persistStore
 } from 'redux-persist';
 import persistedRootReducer from './persistConfig';
 

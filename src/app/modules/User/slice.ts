@@ -1,12 +1,15 @@
+import { fetchFactory } from "@Module/Application/slice";
+import { Factory, ResponseFactoryRequest } from "@Module/Application/types";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { notification } from "antd";
 import api from "../../../services/api";
-import { AsyncThunkAPIConfig, DispatchThunk, RootState, ThunkResult } from "../../store";
+import { DispatchThunk, RootState } from "../../store";
 import { makeLogout } from "../SignIn/slice";
-import { IUserState, ResponseUserRequest, ResponseFactoryRequest } from "./types";
+import { IUserState, ResponseUserRequest } from "./types";
+
 
 // Async Thunks
-export const requestUserData = createAsyncThunk<
+export const fetchUserData = createAsyncThunk<
     ResponseUserRequest,
     void,
     {
@@ -24,11 +27,11 @@ export const requestUserData = createAsyncThunk<
                 }
             });
             console.log(response.data.data);
-            const factory = await ThunkAPI.dispatch(requestFabricas());
+            const factory = await ThunkAPI.dispatch(fetchFactory());
             if (factory.meta.requestStatus === 'rejected') {
                 return ThunkAPI.rejectWithValue({ error: 'Cannot Fech Factory data' })
             }
-            return response.data;
+            return response.data
 
         } catch (error) {
             console.log(error);
@@ -39,27 +42,6 @@ export const requestUserData = createAsyncThunk<
         // return response.data.data
     }
 );
-export const requestFabricas = createAsyncThunk<ResponseFactoryRequest, void, AsyncThunkAPIConfig>(
-    'user/requestFabrica',
-    async (data, ThunkAPI) => {
-        const { auth } = ThunkAPI.getState();
-        try {
-            const response = await api.get<ResponseFactoryRequest>('/fabricas', {
-                headers: {
-                    Authorization: `Bearer ${auth.token}`
-                }
-            });
-            console.log(response.data.data);
-            return response.data;
-
-        } catch (error) {
-            console.log(error);
-            // if request is unauthorized, let user logout
-            ThunkAPI.dispatch(makeLogout());
-            return ThunkAPI.rejectWithValue({ error: 'Cannot fetch user Data' })
-        }
-    }
-)
 
 
 
@@ -80,30 +62,19 @@ const userSlice = createSlice({
     name: 'user',
     initialState,
     reducers: {
-        userfetchLoading: (state, action) => {
-            state.loading = 'pending';
-        },
-        userFetchFailed: (state) => {
-            state.loading = 'failed'
-        },
-        userFetchSucceeded: (state, { payload }: PayloadAction<IUserState>) => {
-            state.id = payload.id;
-            state.name = payload.name;
-            state.email = payload.email;
-            state.fabrica = payload.fabrica;
-            state.permissions = payload.permissions;
-            state.loading = 'succeeded';
+        alterFactory: (state, { payload }: PayloadAction<{ factoryId: number }>) => {
+            state.fabrica = payload.factoryId;
         }
     },
     extraReducers: builder => {
-        builder.addCase(requestUserData.pending, (state) => {
+        builder.addCase(fetchUserData.pending, (state) => {
             state.loading = 'pending';
         })
-        builder.addCase(requestUserData.rejected, (state) => {
+        builder.addCase(fetchUserData.rejected, (state) => {
             state.loading = 'failed';
         })
 
-        builder.addCase(requestUserData.fulfilled, (state, { payload }) => {
+        builder.addCase(fetchUserData.fulfilled, (state, { payload }) => {
             state.id = payload.data.id;
             state.email = payload.data.email;
             state.name = payload.data.full_name;
@@ -131,5 +102,5 @@ const userSlice = createSlice({
     }
 });
 
-export const { userFetchFailed, userFetchSucceeded, userfetchLoading } = userSlice.actions;
+export const { alterFactory } = userSlice.actions;
 export default userSlice.reducer;

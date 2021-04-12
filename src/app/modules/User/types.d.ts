@@ -29,7 +29,7 @@ export interface ResponseUserRequest {
         codfabrica: number,
         codsetor: number,
         data_nascimento: Date
-    }
+    },
 }
 
 type Fabrica = {

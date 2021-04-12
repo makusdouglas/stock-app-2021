@@ -15,7 +15,8 @@ const SideMenu: React.FC<MenuProps> = ({ collapsed }) => {
     const [menuText, setMenuText] = useState<string>(collapsed ? 'MENU' : 'MENU PRINCIPAL');
     const [isCollapsed, setIsCollapsed] = useState<boolean>(collapsed);
 
-    const { firstName, lastName } = useAppSelector(state => state.user);
+    const { firstName, lastName, fabrica } = useAppSelector(state => state.user);
+    const { factory } = useAppSelector(state => state.app);
 
     useEffect(() => {
         if (collapsed) {
@@ -49,11 +50,15 @@ const SideMenu: React.FC<MenuProps> = ({ collapsed }) => {
                                     justifyContent: 'space-between'
                                 }}
                             >
-                                <h6>BELA IAÇA</h6>
-                                <IconButton
-                                    shape='circle'
-                                    children={<SettingOutlined size={20} />}
-                                />
+                                <Link to='/user/profile/0'>
+                                    <h6>{factory.find(f => f.codigo.toString() === fabrica?.toString())?.descricao || 'MASTER'}</h6>
+                                </Link>
+                                <Link to='/user/profile/0'>
+                                    <IconButton
+                                        shape='circle'
+                                        children={<SettingOutlined size={20} />}
+                                    />
+                                </Link>
                             </div>
                         </Space>}
                     </Space>

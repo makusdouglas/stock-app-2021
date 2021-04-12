@@ -2,15 +2,13 @@ import React, { useEffect, useState } from 'react';
 
 import { Layout, Breadcrumb } from 'antd';
 
-
-
 import './index.less';
 import { SiderStyled } from './styles';
 import { Footer } from 'antd/lib/layout/layout';
 import SideMenu from './sideMenu';
 import HeaderStyled from './header';
 import { useAppDispatch, useAppSelector } from '@Store/hooks';
-import { requestUserData } from '@Module/User/slice';
+import { fetchUserData } from '@Module/User/slice';
 import Loading from '@Components/Loading';
 
 const { Content } = Layout;
@@ -30,7 +28,7 @@ const DefaultLayout: React.FC = ({ children }) => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(requestUserData());
+    dispatch(fetchUserData());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -48,7 +46,13 @@ const DefaultLayout: React.FC = ({ children }) => {
     <React.Fragment>
       {user.loading === 'succeeded' ?
         <Layout style={{ minHeight: '100vh' }}>
-          <SiderStyled width={200} trigger={null} collapsible collapsed={collapsed} onCollapse={(coll => setCollapsed(coll))}>
+          <SiderStyled
+            width={200}
+            trigger={null}
+            collapsible
+            collapsed={collapsed}
+            onCollapse={(coll => setCollapsed(coll))}
+          >
             <div className="logo">
               <h1>{title}</h1>
             </div>
