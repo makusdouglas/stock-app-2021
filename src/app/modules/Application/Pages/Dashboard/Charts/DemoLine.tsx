@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Area } from '@ant-design/charts';
+import { AreaConfig } from '@ant-design/charts/es/area';
 
-const DemoLine: React.FC = () => {
+const DemoLine: React.FC<{ colorArea?: string }> = ({ colorArea }) => {
     const [data, setData] = useState([]);
     useEffect(() => {
         asyncFetch();
@@ -14,13 +15,14 @@ const DemoLine: React.FC = () => {
                 console.log('fetch data failed', error);
             });
     };
-    var config = {
+    var config: AreaConfig = {
         data: data,
         xField: 'Date',
         yField: 'scales',
+        height: 120,
         xAxis: { tickCount: 5 },
         areaStyle: function areaStyle() {
-            return { fill: 'l(270) 0:#ffffff 0.5:#7ec2f3 1:#1890ff' };
+            return { fill: colorArea || '#1890ff' };
         },
     };
     return <Area {...config} />;

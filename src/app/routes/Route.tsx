@@ -25,13 +25,13 @@ const RouteWrapper = (props: PrivateRouteProps) => {
         return <Redirect to="/" />;
     }
     if (isAuthenticated && !isPrivate) {
-        return <Redirect to="/dashboard" />;
+        return <Redirect to="/app/dashboard" />;
     }
     if (undefinedRoute && !isAuthenticated) {
         return <Redirect to="/" />;
     }
     if (undefinedRoute && isAuthenticated) {
-        return <Redirect to="/404" />;
+        return <Redirect to="/app/404" />;
     }
     const Layout = isAuthenticated ? DefaultLayout : AuthLeyout;
 

@@ -68,9 +68,9 @@ const SideMenu: React.FC<MenuProps> = ({ collapsed }) => {
                 </MenuTitle>
 
                 <Menu.Item key="sub1" icon={<DashboardOutlined />}>
-                    <Link to='/dashboard'>Dashboard</Link>
+                    <Link to='/app/dashboard'>Dashboard</Link>
                 </Menu.Item>
-                <SubMenu key="sub2" icon={<DashboardOutlined />} title="Dashboard">
+                <SubMenu key="sub2" icon={<DashboardOutlined />} title="App">
                     <Menu.ItemGroup key="g1" title="Dashboard">
                         <Menu.Item key="1">option1</Menu.Item>
                         <Menu.Item key="2">option2</Menu.Item>
@@ -78,17 +78,29 @@ const SideMenu: React.FC<MenuProps> = ({ collapsed }) => {
                         <Menu.Item key="4">option4</Menu.Item>
                     </Menu.ItemGroup>
                 </SubMenu>
-                <SubMenu key="sub3" icon={<LaptopOutlined />} title="subnav 2">
-                    <Menu.Item key="5">option5</Menu.Item>
-                    <Menu.Item key="6">option6</Menu.Item>
-                    <Menu.Item key="7">option7</Menu.Item>
-                    <Menu.Item key="8">option8</Menu.Item>
+                <SubMenu key="sub3" icon={<LaptopOutlined />} title="Manutenção">
+                    <Menu.ItemGroup key="g2" title="Manutenção">
+                        <Menu.Item key="5">Início</Menu.Item>
+                        <Menu.Item key="6">Fugais</Menu.Item>
+                        <Menu.Item key="7">Ordens de Serviço</Menu.Item>
+                    </Menu.ItemGroup>
+                    <Menu.ItemGroup key="g3" subMenuKey="sub6" title="Relatórios">
+                        <Menu.Item key="8">Peças Prioritárias</Menu.Item>
+                        <Menu.Item key="9">Estatísticas Manutenção</Menu.Item>
+                        <Menu.Item key="10">Relatório de O.S</Menu.Item>
+                    </Menu.ItemGroup>
                 </SubMenu>
-                <SubMenu key="sub4" icon={<NotificationOutlined />} title="subnav 3">
-                    <Menu.Item key="9">option9</Menu.Item>
-                    <Menu.Item key="10">option10</Menu.Item>
-                    <Menu.Item key="11">option11</Menu.Item>
-                    <Menu.Item key="12">option12</Menu.Item>
+                <SubMenu key="sub4" icon={<NotificationOutlined />} title="Prog. de Produção">
+                    <Menu.Item key="11">option9</Menu.Item>
+                    <Menu.Item key="12">option10</Menu.Item>
+                    <Menu.Item key="13">option11</Menu.Item>
+                    <Menu.Item key="14">option12</Menu.Item>
+                </SubMenu>
+                <SubMenu key="sub5" icon={<NotificationOutlined />} title="PROD">
+                    <Menu.Item key="15">option9</Menu.Item>
+                    <Menu.Item key="16">option10</Menu.Item>
+                    <Menu.Item key="17">option11</Menu.Item>
+                    <Menu.Item key="18">option12</Menu.Item>
                 </SubMenu>
             </Menu>
         </React.Fragment>
