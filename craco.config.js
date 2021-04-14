@@ -9,11 +9,12 @@ module.exports = {
                     lessOptions: {
                         modifyVars: {
                             // '@primary-color': '#1890ff',
-                            '@primary-color': '#53284f',
+                            '@primary-color': '#1890ff',
                             // '@primary-color': darken(0.06, '#53284F'),
-                            '@layout-header-background': '#3B1C38',
+                            '@layout-header-background': '#0C0C53',
                             // '@menu-dark-inline-submenu-bg': '#230F21'
-                            '@menu-dark-inline-submenu-bg': '#290027'
+                            // '@menu-dark-inline-submenu-bg': '#290027'
+                            '@menu-dark-inline-submenu-bg': '#000042'
                         },
                         javascriptEnabled: true,
                     },

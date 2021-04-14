@@ -2,8 +2,7 @@ import React from 'react';
 import { Typography, Image, Input, Space, Form, Checkbox, Button, Divider, notification } from 'antd'
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 
-import { Container, ImageStyled, LeftSider, RightSide, FormContainer } from './styles';
-import Carrossel from '../../components/Carrossel';
+import { Container, RightSide, FormContainer } from './styles';
 import { Footer } from 'antd/lib/layout/layout';
 import { ValidateErrorEntity } from './types';
 
@@ -11,6 +10,10 @@ import { ValidateErrorEntity } from './types';
 import { IAuthState } from './types';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { requestLogin } from './slice'
+
+// assets
+import appStockLogo from '@Assets/images/logos/appstockblue.png'
+import { Link } from 'react-router-dom';
 
 
 type SignInFormValidatorErrorsType = ValidateErrorEntity<IAuthState>;
@@ -49,35 +52,12 @@ const SignIn: React.FC = () => {
     // }
     return (
         <Container>
-            <LeftSider className="carrousel-container-stld">
-                <Carrossel
-                    fade
-                    adaptiveHeight
-                    autoplay
-                    autoplaySpeed={8000}
-                    centerMode
-                    responsive={[{
-                        breakpoint: 720,
-                        settings: {
-                        }
-                    }]}
-                    style={{
-                        maxWidth: '50vw',
-                        // height: '100vh',
-
-                    }}>
-                    <ImageStyled src="images/carrousel/petruz-depoimento-paulo.jpg" />
-                    <ImageStyled src="images/carrousel/petruz-depoimento-expedicao.png" />
-                    <ImageStyled src="images/carrousel/petruz-gratidao.jpg" />
-                    <ImageStyled src="images/carrousel/petruz-depoimento.jpg" />
-                </Carrossel>
-            </LeftSider>
             <RightSide>
                 <FormContainer>
                     <section>
-                        <Image preview={false} src="images/logos/logoPetruzCompleta.png" />
+                        <Image preview={false} src={appStockLogo} />
                     </section>
-                    <Space direction="vertical" size='small'>
+                    <Space direction="vertical" size='middle' style={{padding: 10}}>
                         <Divider orientation='center' >
                             <Title level={4} style={{ marginBottom: 0 }}>Login</Title>
                         </Divider>
@@ -124,12 +104,11 @@ const SignIn: React.FC = () => {
                             <Space direction='horizontal' size='small' style={{
                                 display: 'flex',
                                 justifyContent: 'flex-end',
+                                alignItems: 'baseline',
                                 marginBottom: 0,
                             }}>
 
-                                <Form.Item name="rememberCredentials" valuePropName="checked">
-                                    <Checkbox>Lembrar senha</Checkbox>
-                                </Form.Item>
+                                <Link to='/app/register'>Esqueci minha senha</Link>
                                 <Form.Item>
                                     <Button
                                         type="primary"
@@ -142,6 +121,11 @@ const SignIn: React.FC = () => {
                                 </Button>
                                 </Form.Item>
                             </Space>
+                            <Divider orientation='center' style={{ margin: 0, marginBottom: 5 }} >
+                                <Text type='secondary' strong>
+                                Ainda não possui uma conta?
+                                </Text>
+                                </Divider>
                         </Form>
 
                     </Space>
@@ -154,10 +138,11 @@ const SignIn: React.FC = () => {
                             justifyContent: 'center',
                             fontSize: 9,
                             padding: 0,
+                            marginBottom: 5,
                             backgroundColor: 'transparent',
                         }}>
-                        <strong>Petruz Web</strong>
-                        ©2021 | Design Sys. by @AntDesign - vBeta 2.0</Footer>
+                        <strong>App STOCK</strong>
+                        ©2021 | Design Sys. by @AntDesign - vBeta 0.1.0</Footer>
                 </FormContainer>
             </RightSide>
         </Container>
