@@ -11,6 +11,7 @@ declare module 'styled-components' {
       secondary: string;
       body: string;
       text: string;
+      box: string;
       buttons: {
         primary: string;
         alert: string;

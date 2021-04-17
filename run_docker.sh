@@ -1,0 +1,1 @@
+docker run -it -p 3000:3000 --rm -v $(pwd):/home/node/app --name "pwa" pwapp_react

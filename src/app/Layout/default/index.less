@@ -1,0 +1,50 @@
+/** @format */
+
+/* @import '~antd/dist/antd.css'; */
+
+.ant-layout-sider-children .logo {
+  /* width: 120px; */
+  height: 32px;
+  margin: 16px;
+  background: @primary-color;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.ant-layout-sider-children .logo h1 {
+  color: #fff;
+  margin: 0;
+}
+
+/* .ant-row-rtl #components-layout-demo-top-side-2 .logo {
+  float: right;
+  margin: 16px 0 16px 24px;
+} */
+
+.site-layout-background {
+  background: #fff;
+}
+.site-layout-background .trigger {
+  padding: 0 24px;
+  font-size: 18px;
+  line-height: 64px;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+.site-layout-background .trigger:hover {
+  color: #7e5e7b;
+}
+
+.avatar-item {
+  margin-right: 10px;
+  .anticon {
+    margin-left: 5px;
+  }
+}
+
+[class*='-col-rtl'] .avatar-item {
+  margin-right: 0;
+  margin-left: 24px;
+}
