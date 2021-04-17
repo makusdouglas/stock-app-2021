@@ -14,8 +14,24 @@ interface AuthState {
 interface MyKnownError {
   errorMessage: string;
 }
+
+type Role = {
+  id: number;
+  name: string;
+  description: string;
+  createdAt: Date;
+  updatedAt: Date;
+};
 interface RequestLoginResponse {
   access_token: string;
+  email: string;
+  id: string;
+  firstname: string;
+  lastname: string;
+  birth: Date;
+  createdAt: Date;
+  updatedAt: Date;
+  roles: Role[];
 }
 
 export const requestLogin = createAsyncThunk<
@@ -27,14 +43,11 @@ export const requestLogin = createAsyncThunk<
 >('auth/requestlogin', async (userData, thunkApi) => {
   const { email, password } = userData;
   try {
-    const response = await api.post<RequestLoginResponse>('oauth/token', {
-      client_id: '3',
-      client_secret: 'petruzapiBxwer!294nPqzojd8349',
-      grant_type: 'password',
-      username: email,
+    const response = await api.post<RequestLoginResponse>('sessions', {
+      email,
       password,
     });
-    thunkApi.dispatch(setShowToast({ showToast: true }))
+    thunkApi.dispatch(setShowToast({ showToast: true }));
     return response.data;
   } catch (err) {
     console.log(err);
@@ -60,10 +73,10 @@ export const authSlice = createSlice({
       // state.email = action.payload.email;
       // state.password = action.payload.password;
     },
-    makeLogout: (state) => {
+    makeLogout: state => {
       state.token = null;
       state.isAuthenticated = false;
-    }
+    },
   },
   extraReducers: builder => {
     builder.addCase(requestLogin.pending, state => {

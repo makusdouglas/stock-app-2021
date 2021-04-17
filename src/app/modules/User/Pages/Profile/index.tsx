@@ -3,7 +3,7 @@ import ContentBox from '../../../../components/ContentBox';
 import { Tabs } from 'antd';
 
 // icons 
-import { UserOutlined } from '@ant-design/icons';
+import { UserOutlined, FormOutlined, BellFilled, LockFilled } from '@ant-design/icons';
 import { FaUserCog } from 'react-icons/fa'
 // Pages
 import UserProfile from './UserProfile';
@@ -23,7 +23,7 @@ const Profile: React.FC = () => {
         <TabPane tab={
           <span>
             <UserOutlined />
-        Ajustes rápidos
+        Meu perfil
       </span>
         }
           key={'0'}
@@ -33,15 +33,38 @@ const Profile: React.FC = () => {
         <TabPane
           tab={
             <span>
-              <FaUserCog style={{ marginRight: 12 }} />
-            Configurações de conta
+              <FormOutlined /> 
+            Editar perfil
             </span>
           }
           key='1'
         >
           <UserEditProfile />
         </TabPane>
+        <TabPane
+          tab={
+            <span>
+              <BellFilled /> 
+            Notificações
+            </span>
+          }
+          key='2'
+        >
+          <h2>Notificações</h2>
+        </TabPane>
+        <TabPane
+          tab={
+            <span>
+              <LockFilled /> 
+            Senhas e Segurança
+            </span>
+          }
+          key='3'
+        >
+          <h2>Senhas e Segurança</h2>
+        </TabPane>
       </Tabs>
+      
     </ContentBox>
   );
 }

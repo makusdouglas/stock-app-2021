@@ -21,7 +21,7 @@ export const BodyPopover: React.FC = () => {
     return (
         <React.Fragment>
             <UserPopupBody>
-                <Title level={4} style={{ marginBottom: 0 }}>{user.name}</Title>
+                <Title level={4} style={{ marginBottom: 0 }}>{user.firstName + ' ' + user.lastName}</Title>
                 <Text type='secondary'>{user.email}</Text>
             </UserPopupBody>
             <Divider style={{ marginBottom: '8px' }} />

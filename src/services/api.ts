@@ -7,7 +7,7 @@ import axios from 'axios';
 //   'Origin': 'http: 127.0.0.1:3001'
 // };
 const api = axios.create({
-  baseURL: `${process.env.REACT_APP_HOST_CORS_BYPASS}http://api.petruz.dseti.com`,
+  baseURL: 'http://localhost:3333',
   // baseURL: `http://192.168.30.152:8000`
 });
 // api.interceptors.request.use(

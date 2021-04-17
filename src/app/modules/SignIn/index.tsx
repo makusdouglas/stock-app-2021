@@ -1,6 +1,7 @@
 import React from 'react';
-import { Typography, Image, Input, Space, Form, Checkbox, Button, Divider, notification } from 'antd'
-import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
+import { Typography, Image, Input, Space, Form, Button, Divider, notification, Tooltip } from 'antd'
+import { EyeInvisibleOutlined, EyeTwoTone, GoogleOutlined, FacebookOutlined } from '@ant-design/icons';
+import {FaFacebookF, FaLinkedinIn} from 'react-icons/fa'
 
 import { Container, RightSide, FormContainer } from './styles';
 import { Footer } from 'antd/lib/layout/layout';
@@ -12,7 +13,7 @@ import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { requestLogin } from './slice'
 
 // assets
-import appStockLogo from '@Assets/images/logos/appstockblue.png'
+import appStockLogo from '@Assets/images/logos/stok.png'
 import { Link } from 'react-router-dom';
 
 
@@ -50,6 +51,11 @@ const SignIn: React.FC = () => {
     // const clearFields = () => {
     //     signInForm.resetFields();
     // }
+    const buttonstyle = {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'
+    }
     return (
         <Container>
             <RightSide>
@@ -122,15 +128,28 @@ const SignIn: React.FC = () => {
                                 </Form.Item>
                             </Space>
                             <Divider orientation='center' style={{ margin: 0, marginBottom: 5 }} >
-                                <Text type='secondary' strong>
-                                Ainda não possui uma conta?
+                                <Text type='secondary'>
+                                    Ainda não possui conta?
                                 </Text>
-                                </Divider>
+                            </Divider>
+                            {/* <Divider orientation="center"> */}
+                                <Space direction='horizontal' align="center" style={{display: "flex", justifyContent: 'center'}}>
+                                    <Tooltip title="Google">
+                                        <Button type="primary" shape="circle" icon={<GoogleOutlined />} />
+                                    </Tooltip>
+                                    <Tooltip title="Facebook">
+                                        <Button type="primary" style={buttonstyle} shape="circle" icon={<FaFacebookF/>} />
+                                    </Tooltip><Tooltip title="Linkedin">
+                                        <Button type="primary" style={buttonstyle} shape="circle" icon={<FaLinkedinIn />} />
+                                    </Tooltip>
+                                </Space>
+                            {/* </Divider> */}
+
                         </Form>
 
                     </Space>
                     <Divider style={{ margin: 0, marginBottom: 5 }} />
-                    <Footer
+                    {/* <Footer
                         style={{
                             // gridArea: 'footer',
                             display: 'flex',
@@ -142,7 +161,7 @@ const SignIn: React.FC = () => {
                             backgroundColor: 'transparent',
                         }}>
                         <strong>App STOCK</strong>
-                        ©2021 | Design Sys. by @AntDesign - vBeta 0.1.0</Footer>
+                        ©2021 | Design Sys. by @AntDesign - vBeta 0.1.0</Footer> */}
                 </FormContainer>
             </RightSide>
         </Container>

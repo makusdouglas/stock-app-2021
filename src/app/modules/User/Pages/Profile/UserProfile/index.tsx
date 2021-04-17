@@ -1,49 +1,36 @@
 import React from 'react';
 import { useAppDispatch, useAppSelector } from '@Store/hooks';
-import { Form, Select } from 'antd'
-import { alterFactory } from '@Module/User/slice';
-import { createDraft } from 'immer';
-// import { Container } from './styles';
+import { Container, Section, AvatarContainer } from './styles';
+import {Avatar, Button, Tooltip} from 'antd';
+import {UserOutlined, EditOutlined} from '@ant-design/icons'
+
 
 const UserProfile: React.FC = () => {
-    const { factory } = useAppSelector(state => state.app);
     const { fabrica } = useAppSelector(state => state.user);
-    const dispatch = useAppDispatch();
-    const handleFactoryChange = (value: string) => {
-        dispatch(alterFactory({ factoryId: Number(value) }))
-    }
-    const sortFactory = createDraft(factory)
-
 
     return (
-        <React.Fragment>
-            <h1>Seleção de Fábrica</h1>
-            <Form layout='vertical'>
-                <Form.Item
-                    required
-                    label='Selecione a fábrica:'
-                    style={{ maxWidth: 600 }}
-                >
-                    <Select
-                        onChange={e => handleFactoryChange(e)}
-                        value={fabrica?.toString() === '0' ? undefined : fabrica?.toString()}
-                        placeholder='Selecione ...'
-                    >
-                        {sortFactory.sort((strA, strB) => (strA.descricao.localeCompare(strB.descricao)) - (strB.descricao.localeCompare(strA.descricao)))
-                            .map((value, index, arr) => {
-                                return (
-                                    <Select.Option
-                                        value={value.codigo.toString()}
-                                    >
-                                        {value.descricao}
-                                    </Select.Option>
-                                )
-                            }
-                            )}
-                    </Select>
-                </Form.Item>
-            </Form>
-        </React.Fragment>
+        <Container>
+            <Section>
+                <h2>Meu Perfil</h2>
+                <AvatarContainer>
+                    <span>
+                        <Avatar 
+                            size={{ xs: 50, sm: 50, md: 70, lg: 120, xl: 120, xxl: 150 }} 
+                            icon={<UserOutlined/>}
+                        
+                        >
+                        </Avatar>
+                        <Tooltip title="Editar foto">
+                            <Button 
+                                type="primary" 
+                                shape="circle"
+                                icon={<EditOutlined />} />
+                        </Tooltip>
+                    </span>
+                </AvatarContainer>
+
+            </Section>
+        </Container>
     );
 }
 

@@ -17,7 +17,7 @@ const { Content } = Layout;
 const DefaultLayout: React.FC = ({ children }) => {
   const [collapsed, setCollapsed] = useState<boolean>(false);
 
-  const [title, setTitle] = useState<string>(collapsed ? 'PTZ' : 'Petruz Web');
+  const [title, setTitle] = useState<string>(collapsed ? 'STK' : 'STOK APP');
 
 
   const toggle = () => {
@@ -34,10 +34,10 @@ const DefaultLayout: React.FC = ({ children }) => {
 
   useEffect(() => {
     if (collapsed) {
-      setTitle('PTZ');
+      setTitle('STK');
     } else {
       setTimeout(() => {
-        setTitle('Petruz Web');
+        setTitle('STOK APP');
       }, 100);
     }
   }, [collapsed])
@@ -71,7 +71,7 @@ const DefaultLayout: React.FC = ({ children }) => {
               {children}
             </Content>
             <Footer style={{ textAlign: 'right' }}>
-              <strong>Petruz Web</strong>
+              <strong>STOK APP</strong>
           ©2021 | Design Sys. by @AntDesign - vBeta 2.0</Footer>
           </Layout>
         </Layout>

@@ -13,9 +13,12 @@ export const Container = styled.div`
   max-width: 100vw;
   /* background-blend-mode: soft-light; */
   background-image: url(${bgblue});
+  background-color: #5271ff;
+  /* background-blend-mode: color-dodge; */
+  background-blend-mode: screen;
+
   background-size: contain;
   background-repeat: repeat;
-  background-color: ${props => props.theme.colors.box};
   display: flex;
   position: relative;
 
@@ -76,7 +79,16 @@ export const FormContainer = styled.main`
     display: flex;
     flex: 1;
     justify-content: center;
-    background-color: #1890ff;
+    /* background: linear-gradient(to right, #1890ff, #5271ff); */
+    background: linear-gradient(
+      to right,
+      #72efdd 20%,
+      #51cce7 20% 40%,
+      #2ba4f7 40% 60%,
+      #1890ff 60% 80%,
+      #5271ff 80%
+    );
+
     padding: 20px 0;
     font-family: 'Ubuntu', sans-serif;
     div {
