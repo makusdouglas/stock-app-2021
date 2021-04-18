@@ -2,13 +2,12 @@ import React, { useState, useEffect } from 'react';
 
 import { Menu, Avatar, Space } from 'antd';
 import { Link } from 'react-router-dom';
-import { 
-    DashboardOutlined, 
-    LaptopOutlined, 
-    NotificationOutlined, 
-    UserOutlined, 
+import {
+    DashboardOutlined,
+    UserOutlined,
     TeamOutlined,
-    SettingOutlined } from '@ant-design/icons'
+    SettingOutlined
+} from '@ant-design/icons'
 import { IconButton, MenuTitle, MenuUserInfo } from './styles';
 import { useAppSelector } from '../../store/hooks';
 // import { Container } from './styles';
@@ -80,10 +79,10 @@ const SideMenu: React.FC<MenuProps> = ({ collapsed }) => {
                     <Link to='/user/profile/1'>Perfil</Link>
                 </Menu.Item>
                 <SubMenu key="sub2" icon={<TeamOutlined />} title="Usuarios">
-                        <Menu.Item key="1">Cadastro de usuarios</Menu.Item>
-                        <Menu.Item key="2">Permissões</Menu.Item>                  
+                    <Menu.Item key="1"><Link to='/team/manage/1'>Cadastro de usuarios</Link></Menu.Item>
+                    <Menu.Item key="2">Permissões</Menu.Item>
                 </SubMenu>
-                
+
             </Menu>
         </React.Fragment>
     );
