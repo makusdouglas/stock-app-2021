@@ -8,6 +8,7 @@ import { OrderedListOutlined, FormOutlined, TeamOutlined } from '@ant-design/ico
 import UserProfile from './TeamProfile';
 import UserEditProfile from './TeamEditProfile';
 import { useParams } from 'react-router';
+import ListCollaborators from './ListCollaborators';
 const { TabPane } = Tabs;
 
 const Manage: React.FC = () => {
@@ -49,7 +50,7 @@ const Manage: React.FC = () => {
           }
           key='2'
         >
-          <h2>Lista de Colaboradores</h2>
+          <ListCollaborators/>
         </TabPane>
         {/* <TabPane
           tab={

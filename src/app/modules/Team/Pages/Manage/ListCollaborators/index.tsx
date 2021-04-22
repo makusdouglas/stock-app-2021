@@ -41,7 +41,7 @@ const data = [
         tags: ['cool', 'teacher'],
     },
 ];
-const UserProfile: React.FC = () => {
+const ListCollaborators: React.FC = () => {
     // const { fabrica } = useAppSelector(state => state.user);
     const [isModalVisible, setIsModalVisible] = useState(false);
     function confirm(e: any) {
@@ -134,7 +134,7 @@ const UserProfile: React.FC = () => {
     return (
         <Container>
             <Section style={{ width: '100%' }}>
-                <h2>Minhas equipes</h2>
+                <h2>Colaboradores Cadastrados</h2>
                 <Table dataSource={data} pagination={{ position: [] }}
                     expandable={{
                         expandedRowRender: record => <p style={{ margin: 0 }}>{record.lastName}</p>,
@@ -187,4 +187,4 @@ const UserProfile: React.FC = () => {
     );
 }
 
-export default UserProfile;
+export default ListCollaborators;

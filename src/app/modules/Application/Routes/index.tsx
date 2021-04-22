@@ -5,7 +5,7 @@ import NoPermission from '../Pages/NoPermission';
 import NotFoud from '../Pages/NotFoud';
 
 const Routes: React.FC = () => {
-    const { path, url } = useRouteMatch();
+    const { path } = useRouteMatch();
     return (
         <Switch>
             <Route path={path + '/dashboard'} component={Dashboard} />
