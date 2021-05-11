@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Space, Row, Col } from 'antd';
+import { Card, Row, Col } from 'antd';
 import { Line } from '@ant-design/charts';
 
 import ContentBox from '../../../../components/ContentBox';

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { Layout, Menu, Divider, Avatar, Badge, Popover } from 'antd';
+import { Layout, Menu, Avatar, Badge, Popover } from 'antd';
 import { useLocation } from 'react-router';
 import { BodyPopover, HeaderPopover } from './acountPopover';
 import {
@@ -10,8 +10,6 @@ import {
 } from '@ant-design/icons';
 import { RiArrowDropDownFill, RiArrowDropUpFill } from 'react-icons/ri';
 
-
-import { StyledLink } from '../../components/HeaderComponent/styles';
 import { StyledSpace } from './styles';
 import { useAppSelector } from '../../store/hooks';
 

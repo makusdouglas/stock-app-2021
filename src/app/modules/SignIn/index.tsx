@@ -1,10 +1,8 @@
 import React from 'react';
-import { Typography, Image, Input, Space, Form, Button, Divider, notification, Tooltip } from 'antd'
-import { EyeInvisibleOutlined, EyeTwoTone, GoogleOutlined, FacebookOutlined } from '@ant-design/icons';
-import {FaFacebookF, FaLinkedinIn} from 'react-icons/fa'
+import { Typography, Image, Input, Space, Form, Button, Divider, notification} from 'antd'
+import { EyeInvisibleOutlined, EyeTwoTone} from '@ant-design/icons';
 
 import { Container, RightSide, FormContainer } from './styles';
-import { Footer } from 'antd/lib/layout/layout';
 import { ValidateErrorEntity } from './types';
 
 // Redux Methods and Types
@@ -51,11 +49,11 @@ const SignIn: React.FC = () => {
     // const clearFields = () => {
     //     signInForm.resetFields();
     // }
-    const buttonstyle = {
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center'
-    }
+    // const buttonstyle = {
+    //     display: 'flex',
+    //     justifyContent: 'center',
+    //     alignItems: 'center'
+    // }
     return (
         <Container>
             <RightSide>
@@ -127,13 +125,13 @@ const SignIn: React.FC = () => {
                                 </Button>
                                 </Form.Item>
                             </Space>
-                            <Divider orientation='center' style={{ margin: 0, marginBottom: 5 }} >
+                            {/* <Divider orientation='center' style={{ margin: 0, marginBottom: 5 }} >
                                 <Text type='secondary'>
                                     Ainda não possui conta?
                                 </Text>
-                            </Divider>
+                            </Divider> */}
                             {/* <Divider orientation="center"> */}
-                                <Space direction='horizontal' align="center" style={{display: "flex", justifyContent: 'center'}}>
+                                {/* <Space direction='horizontal' align="center" style={{display: "flex", justifyContent: 'center'}}>
                                     <Tooltip title="Google">
                                         <Button type="primary" shape="circle" icon={<GoogleOutlined />} />
                                     </Tooltip>
@@ -142,7 +140,7 @@ const SignIn: React.FC = () => {
                                     </Tooltip><Tooltip title="Linkedin">
                                         <Button type="primary" style={buttonstyle} shape="circle" icon={<FaLinkedinIn />} />
                                     </Tooltip>
-                                </Space>
+                                </Space> */}
                             {/* </Divider> */}
 
                         </Form>

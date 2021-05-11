@@ -17,7 +17,7 @@ const { Content } = Layout;
 const DefaultLayout: React.FC = ({ children }) => {
   const [collapsed, setCollapsed] = useState<boolean>(false);
 
-  const [title, setTitle] = useState<string>(collapsed ? 'STK' : 'STOK APP');
+  const [title, setTitle] = useState<string>(collapsed ? 'STK' : 'Stok System');
 
 
   const toggle = () => {
@@ -37,7 +37,7 @@ const DefaultLayout: React.FC = ({ children }) => {
       setTitle('STK');
     } else {
       setTimeout(() => {
-        setTitle('STOK APP');
+        setTitle('Stok System');
       }, 100);
     }
   }, [collapsed])
@@ -71,7 +71,7 @@ const DefaultLayout: React.FC = ({ children }) => {
               {children}
             </Content>
             <Footer style={{ textAlign: 'right' }}>
-              <strong>STOK APP</strong>
+              <strong>Stok System</strong>
           ©2021 | Design Sys. by @AntDesign - vBeta 2.0</Footer>
           </Layout>
         </Layout>
