@@ -4,7 +4,6 @@ import { Tabs } from 'antd';
 
 // icons 
 import { UserOutlined, FormOutlined, BellFilled, LockFilled } from '@ant-design/icons';
-import { FaUserCog } from 'react-icons/fa'
 // Pages
 import UserProfile from './UserProfile';
 import UserEditProfile from './UserEditProfile';
