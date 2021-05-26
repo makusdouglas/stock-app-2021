@@ -10,14 +10,19 @@ import HeaderStyled from './header';
 import { useAppDispatch, useAppSelector } from '@Store/hooks';
 import { fetchUserData } from '@Module/User/slice';
 import Loading from '@Components/Loading';
+import SiderDrawer from './SiderDrawer';
+import useBreakpoint from 'antd/lib/grid/hooks/useBreakpoint';
 
 const { Content } = Layout;
 
 
 const DefaultLayout: React.FC = ({ children }) => {
-  const [collapsed, setCollapsed] = useState<boolean>(false);
+  const [collapsed, setCollapsed] = useState<boolean>(true);
 
   const [title, setTitle] = useState<string>(collapsed ? 'STK' : 'Stok System');
+
+  const screens = useBreakpoint();
+  const breakpoints = Object.entries(screens).filter(sc => !!sc[1]);
 
 
   const toggle = () => {
@@ -46,7 +51,24 @@ const DefaultLayout: React.FC = ({ children }) => {
     <React.Fragment>
       {user.loading === 'succeeded' ?
         <Layout style={{ minHeight: '100vh' }}>
-          <SiderStyled
+          
+          {breakpoints.length < 3? 
+           (
+            <SiderDrawer 
+          placement='left'
+          toggleVisibility={(e) => setCollapsed(e)}
+          visible={collapsed}
+          
+          >
+          <div className="logo">
+              <h1>{title}</h1>
+            </div>
+            {/* <Divider style={{ borderColor: '#444', margin: 0 }} /> */}
+            <SideMenu collapsed={collapsed} /> {/**SIDE MENU */}
+          </SiderDrawer>
+           )
+           : (
+            <SiderStyled
             width={200}
             trigger={null}
             collapsible
@@ -56,9 +78,13 @@ const DefaultLayout: React.FC = ({ children }) => {
             <div className="logo">
               <h1>{title}</h1>
             </div>
-            {/* <Divider style={{ borderColor: '#444', margin: 0 }} /> */}
-            <SideMenu collapsed={collapsed} /> {/**SIDE MENU */}
+            
+            <SideMenu collapsed={collapsed} /> 
           </SiderStyled>
+           )
+          }    
+
+          
           <Layout>
             <HeaderStyled collapsed={collapsed} toggle={toggle} /> {/** HEADER */}
 

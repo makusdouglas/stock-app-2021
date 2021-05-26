@@ -6,7 +6,10 @@ import {
     DashboardOutlined,
     UserOutlined,
     TeamOutlined,
-    SettingOutlined
+    SettingOutlined,
+    SafetyOutlined,
+    UsergroupAddOutlined,
+    UserAddOutlined
 } from '@ant-design/icons'
 import { IconButton, MenuTitle, MenuUserInfo } from './styles';
 import { useAppSelector } from '../../store/hooks';
@@ -78,9 +81,25 @@ const SideMenu: React.FC<MenuProps> = ({ collapsed }) => {
                 <Menu.Item key="sub10" icon={<UserOutlined />}>
                     <Link to='/user/profile/1'>Perfil</Link>
                 </Menu.Item>
-                <SubMenu key="sub2" icon={<TeamOutlined />} title="Usuarios">
+                <SubMenu key="sub2" icon={<UsergroupAddOutlined /> } title="Equipes Inventário">
                     <Menu.Item key="1"><Link to='/team/manage/1'>Cadastro de usuarios</Link></Menu.Item>
                     <Menu.Item key="2">Permissões</Menu.Item>
+                </SubMenu>
+
+                <MenuTitle collapsed={isCollapsed}>
+                    <h4>ADMIN</h4>
+                </MenuTitle>
+
+                <SubMenu key='sub3' icon={<SettingOutlined />} title='Usuários'>
+                    <Menu.Item key="sub7" icon={<UserAddOutlined />}>
+                        <Link to='/app/dashboard'>Adicionar</Link>
+                    </Menu.Item>
+                    <Menu.Item key="sub5" icon={<TeamOutlined />}>
+                        <Link to='/app/dashboard'>Grupos</Link>
+                    </Menu.Item>
+                    <Menu.Item key="sub6" icon={<SafetyOutlined />}>
+                        <Link to='/app/dashboard'>Permissões</Link>
+                    </Menu.Item>
                 </SubMenu>
 
             </Menu>
