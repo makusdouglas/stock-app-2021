@@ -8,6 +8,7 @@ export const Container = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  max-width: 800px;
 `;
 export const Section = styled.section`
   display: flex;

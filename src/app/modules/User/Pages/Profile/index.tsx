@@ -1,24 +1,29 @@
 import React from 'react';
 import ContentBox from '../../../../components/ContentBox';
-import { Tabs } from 'antd';
+import { PageHeader, Tabs, Grid } from 'antd';
 
 // icons 
-import { UserOutlined, FormOutlined, BellFilled, LockFilled } from '@ant-design/icons';
+import { UserOutlined, FormOutlined, BellFilled, LockFilled, SafetyCertificateOutlined } from '@ant-design/icons';
 // Pages
 import UserProfile from './UserProfile';
 import UserEditProfile from './UserEditProfile';
 import { useParams } from 'react-router';
+import Permissions from '../Permissions';
 const { TabPane } = Tabs;
+const {useBreakpoint} = Grid;
 
 const Profile: React.FC = () => {
   type routeParams = {
     tab: string
   }
-  const { tab } = useParams<routeParams>();
+  const screens = useBreakpoint();
+  const breakpoints = Object.entries(screens).filter(sc => !!sc[1]);
 
+  const { tab } = useParams<routeParams>();
+  
   return (
     <ContentBox cProps={{ minHeight: 400 }}>
-      <Tabs defaultActiveKey={tab} tabPosition={'left'} style={{ minHeight: 220 }}>
+      <Tabs defaultActiveKey={tab} tabPosition={breakpoints.length < 3? 'top' : 'left'} style={{ minHeight: 220 }}>
         <TabPane tab={
           <span>
             <UserOutlined />
@@ -32,6 +37,17 @@ const Profile: React.FC = () => {
         <TabPane
           tab={
             <span>
+              <SafetyCertificateOutlined/>
+              Grupos e permissões
+            </span>
+          }
+          key={'1'}
+        >
+          <Permissions/>
+        </TabPane>
+        {/* <TabPane
+          tab={
+            <span>
               <FormOutlined /> 
             Editar perfil
             </span>
@@ -39,7 +55,7 @@ const Profile: React.FC = () => {
           key='1'
         >
           <UserEditProfile />
-        </TabPane>
+        </TabPane> */}
         <TabPane
           tab={
             <span>
@@ -49,7 +65,12 @@ const Profile: React.FC = () => {
           }
           key='2'
         >
-          <h2>Notificações</h2>
+          <PageHeader
+                    // className="site-page-header"
+                    // onBack={() => null}
+                    title="Notificações"
+                    subTitle="Aqui estão suas notificações mais recentes"
+                />
         </TabPane>
         <TabPane
           tab={
@@ -60,7 +81,12 @@ const Profile: React.FC = () => {
           }
           key='3'
         >
-          <h2>Senhas e Segurança</h2>
+          <PageHeader
+                    // className="site-page-header"
+                    // onBack={() => null}
+                    title="Senhas e Segurança"
+                    subTitle=""
+                />
         </TabPane>
       </Tabs>
       

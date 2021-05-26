@@ -21,6 +21,16 @@ export interface Role {
   description: string;
   createdAt: Date;
   updatedAt: Date;
+  permissions: Permission[];
+}
+
+export interface Permission {
+  id: number;
+  module: string;
+  type: string;
+  description: string;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 export interface ResponseUserRequest {
@@ -34,6 +44,7 @@ export interface ResponseUserRequest {
   codsetor: number;
   createdAt: Date;
   updatedAt: Date;
+  roles: Role[];
 }
 
 type Fabrica = {

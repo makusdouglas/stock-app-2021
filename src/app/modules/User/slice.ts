@@ -75,6 +75,7 @@ const userSlice = createSlice({
       state.birth = payload.birth;
       state.name = (payload.firstname + ' ' + payload.lastname).toUpperCase();
       state.active = true;
+      state.createdAt = payload.createdAt;
 
       // format firstname and lastaname
       let firstName = payload.firstname.toLowerCase().split(' ')[0];
@@ -87,9 +88,8 @@ const userSlice = createSlice({
 
       // format initials
       let firstLetter = firstName[0].toUpperCase();
-      let secondLetter = (firstName === lastName
-        ? firstName[1]
-        : lastName[0]
+      let secondLetter = (
+        firstName === lastName ? firstName[1] : lastName[0]
       ).toUpperCase();
       state.initials = `${firstLetter + secondLetter}`;
 
@@ -99,6 +99,8 @@ const userSlice = createSlice({
         message: `Olá, ${state.firstName} ${state.lastName}!`,
         description: 'Seja bem vindo(a) ao Stok System',
       });
+
+      state.roles.push(...payload.roles);
     });
   },
 });
