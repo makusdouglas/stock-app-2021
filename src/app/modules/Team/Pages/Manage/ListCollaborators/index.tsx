@@ -1,187 +1,154 @@
-import React, { useState } from 'react';
-import { Container, Section} from './styles';
-import { Avatar, Button, message, Modal, Popconfirm, Space, Table, Tooltip } from 'antd';
-import { UserOutlined, AntDesignOutlined } from '@ant-design/icons'
-import Column from 'antd/lib/table/Column';
+import api from '@Services/api';
+import { useAppSelector } from '@Store/hooks';
+import { Button, List, message, Modal, notification, Popconfirm } from 'antd';
+import React, { useEffect } from 'react';
+import { useState } from 'react';
+import { Container, Section } from './styles';
+import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
+import EditCollaborator from './EditCollaborator';
 
-
-
-const data2: any[] = [];
-for (let i = 0; i < 4; i++) {
-    data2.push({
-        key: i,
-        name: `Edward King ${i}`,
-        age: 32,
-        address: `London, Park Lane no. ${i}`,
-    });
+interface UsersData {
+    id: string | number | null,
+    email: string,
+    firstname: string,
+    lastname: string,
+    birth: string
 }
-const data = [
-    {
-        key: '1',
-        firstName: 'John',
-        lastName: 'Produtos de Limpeza',
-        age: 32,
-        address: 'New York No. 1 Lake Park',
-        tags: ['nice', 'developer'],
-    },
-    {
-        key: '2',
-        firstName: 'Jim',
-        lastName: 'Perecíveis',
-        age: 42,
-        address: 'London No. 1 Lake Park',
-        tags: ['loser'],
-    },
-    {
-        key: '3',
-        firstName: 'Joe',
-        lastName: 'Não Perecíveis',
-        age: 32,
-        address: 'Sidney No. 1 Lake Park',
-        tags: ['cool', 'teacher'],
-    },
-];
 const ListCollaborators: React.FC = () => {
-    // const { fabrica } = useAppSelector(state => state.user);
-    const [isModalVisible, setIsModalVisible] = useState(false);
-    function confirm(e: any) {
-        console.log(e);
-        message.success('Exclusão realizada');
+
+    const { token } = useAppSelector(state => state.auth)
+    const userLoged = useAppSelector(state => state.user)
+    const [users, setUsers] = useState<UsersData[]>([])
+    const [userSelected, setUserSelected] = useState<UsersData>({
+        id: '',
+        email: '',
+        firstname: '',
+        lastname: '',
+        birth: ''
+    })
+    const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
+
+    useEffect(() => {
+        listarUsuarios()
+    }, [])
+
+    const listarUsuarios = () => {
+        api.get('users', {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }).then((data) => {
+            // console.log(data.data);
+            setUsers(data.data)
+            // notification.success({
+            //     message: 'Sucesso',
+            //     description: 'Usuarios listados'
+            // })
+        }
+
+        ).catch(e => {
+            console.log(e);
+
+            notification.error({
+                message: 'Falha na listagem',
+                description: e
+            })
+        }
+        )
     }
+    function confirm(id: string | number | null) {
+        if (userLoged.id !== id) {
+            api.delete(`users/${id}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            }).then(
+                message.success('Exclusão realizada')
+            ).catch(
+                e => message.error(e)
+            )
+            listarUsuarios()
+        } else {
+            if (userLoged.id === id) {
+                message.error('Não pode excluir a si mesmo!');
+            }
+        }
 
-    const [selectedRowKeys, setSelectedRowKeys] = useState<any[]>([]);
-    const onSelectChange = (selectedRowKeys: React.SetStateAction<any[]>) => {
-        console.log('selectedRowKeys changed: ', selectedRowKeys);
-        setSelectedRowKeys(selectedRowKeys);
-    };
-    const rowSelection = {
-        selectedRowKeys,
-        onChange: onSelectChange,
-        selections: [
-            Table.SELECTION_ALL,
-            Table.SELECTION_INVERT,
-            Table.SELECTION_NONE,
-            {
-                key: 'odd',
-                text: 'Select Odd Row',
-                onSelect: (changableRowKeys: any[]) => {
-                    let newSelectedRowKeys = [];
-                    newSelectedRowKeys = changableRowKeys.filter((key, index) => {
-                        if (index % 2 !== 0) {
-                            return false;
-                        }
-                        return true;
-                    });
-                    setSelectedRowKeys(newSelectedRowKeys);
-                },
-            },
-            {
-                key: 'even',
-                text: 'Select Even Row',
-                onSelect: (changableRowKeys: any[]) => {
-                    let newSelectedRowKeys = [];
-                    newSelectedRowKeys = changableRowKeys.filter((key, index) => {
-                        if (index % 2 !== 0) {
-                            return true;
-                        }
-                        return false;
-                    });
-                    setSelectedRowKeys(newSelectedRowKeys);
-                },
-            },
-        ],
-    };
-
+    }
     function cancel(e: any) {
         console.log(e);
         message.error('Exclusão cancelada');
     }
 
-    const showModal = () => {
-        setIsModalVisible(true);
-    };
-
+    function showModal(item: UsersData) {
+        setUserSelected(item)
+        setIsModalVisible(true)
+    }
     const handleOk = () => {
+        listarUsuarios()
         setIsModalVisible(false);
-    };
-
-    const handleCancel = () => {
-        setIsModalVisible(false);
-    };
-
-    const columns = [
-        {
-            title: 'Colaborador',
-            dataIndex: 'name',
-        },
-        {
-            title: '',
-            render: (retorno: any) => (
-                <Popconfirm
-                    title="Você deseja excluir esse integrante?"
-                    onConfirm={confirm}
-                    onCancel={cancel}
-                    okText="Sim"
-                    cancelText="Não"
-                >
-                    <Button type='link'>Excluir</Button>
-                </Popconfirm>
-            )
-        },
-    ];
-
-
+    }
     return (
         <Container>
             <Section style={{ width: '100%' }}>
                 <h2>Colaboradores Cadastrados</h2>
-                <Table dataSource={data} pagination={{ position: [] }}
-                    expandable={{
-                        expandedRowRender: record => <p style={{ margin: 0 }}>{record.lastName}</p>,
-                        rowExpandable: record => record.lastName !== 'Not Expandable',
-                    }}>
-                    <Column
-                        title="Equipe"
-                        dataIndex="tags"
-                        key="tags"
-                    />
-                    <Column title="Participantes" render={(text, record) => (
-                        <Avatar.Group maxCount={2} maxStyle={{ color: '#f56a00', backgroundColor: '#fde3cf' }}>
-                            <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
-                            <Avatar style={{ backgroundColor: '#f56a00' }}>K</Avatar>
-                            <Tooltip title="Ant User" placement="top">
-                                <Avatar style={{ backgroundColor: '#87d068' }} icon={<UserOutlined />} />
-                            </Tooltip>
-                            <Avatar style={{ backgroundColor: '#1890ff' }} icon={<AntDesignOutlined />} />
-                        </Avatar.Group>
-                    )} />
-                    <Column
-                        title="Opções"
-                        key="action"
-                        render={(text, record) => (
-                            <Space size="middle">
-                                <Button type='link' onClick={showModal}>
-                                    Editar
-                                    </Button>
-                                <Popconfirm
-                                    title="Você deseja excluir essa equipe?"
-                                    onConfirm={confirm}
-                                    onCancel={cancel}
-                                    okText="Sim"
-                                    cancelText="Não"
-                                >
-                                    <Button type='link'>Excluir</Button>
-                                </Popconfirm>
-
-                            </Space>
-                        )}
-                    />
-                </Table>
-
-                <Modal title="Edição de equipe" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
-                    <Table pagination={{ position: [] }} rowSelection={rowSelection} columns={columns} dataSource={data2} />
+                <List
+                    itemLayout="vertical"
+                    size="large"
+                    pagination={{
+                        onChange: page => {
+                            console.log(page);
+                        },
+                        pageSize: 3,
+                    }}
+                    dataSource={users}
+                    renderItem={item =>
+                        <>
+                            <List.Item
+                                key={item.id}
+                                actions={[
+                                    <Button type='link' icon={<EditOutlined />} size='small' onClick={() => showModal(item)}>
+                                        Editar
+                                    </Button>,
+                                    <Popconfirm
+                                        title="Você deseja mesmo excluir esse colaborador?"
+                                        onConfirm={() => confirm(item.id)}
+                                        onCancel={cancel}
+                                        okText="Sim"
+                                        cancelText="Não"
+                                    >
+                                        <Button type='link' danger icon={<DeleteOutlined />} size='small'>
+                                            Excluir
+                                        </Button>
+                                    </Popconfirm>
+                                ]}
+                            >
+                                <List.Item.Meta
+                                    title={item.firstname + ' ' + item.lastname}
+                                    description={
+                                        <>
+                                            <p>
+                                                idade: {item.birth ?
+                                                    new Date().getFullYear() - new Date(item.birth).getFullYear() :
+                                                    0} anos
+                                            </p>
+                                            <p>
+                                                email: {item.email}
+                                            </p>
+                                        </>
+                                    }
+                                />
+                            </List.Item>
+                        </>
+                    }
+                />
+                <Modal title="Editar Cadastro" visible={isModalVisible} closable={false} footer={[
+                    <Button type='default' size='small' onClick={handleOk}>
+                        Encerrar edição
+                    </Button>
+                ]} >
+                    <EditCollaborator userData={userSelected} />
                 </Modal>
-
             </Section>
         </Container>
     );

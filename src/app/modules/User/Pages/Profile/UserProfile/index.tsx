@@ -3,7 +3,6 @@ import { useAppDispatch, useAppSelector } from '@Store/hooks';
 import { Container, Section, AvatarContainer } from './styles';
 import {Avatar, Button, Tooltip, Typography, Image, Divider, Row, Col, Descriptions, List, PageHeader} from 'antd';
 import {UserOutlined, EditOutlined, SafetyCertificateTwoTone} from '@ant-design/icons'
-
 const {Text,Title } = Typography
 const UserProfile: React.FC = () => {
     const { 
@@ -17,6 +16,7 @@ const UserProfile: React.FC = () => {
         id,
         roles
     } = useAppSelector(state => state.user);
+
 
     return (
         <Container>
@@ -63,7 +63,7 @@ const UserProfile: React.FC = () => {
                                     <Descriptions.Item label="Nome">{firstName}</Descriptions.Item>
                                     <Descriptions.Item label="Sobrenome">{lastName}</Descriptions.Item>
                                     <Descriptions.Item label="E-mail">{email}</Descriptions.Item>
-                                    <Descriptions.Item label="Dt. nascimento">{ birth && new Date(birth).toLocaleDateString()}</Descriptions.Item>
+                                    <Descriptions.Item label="Nascimento">{ birth && new Date(birth).toLocaleDateString()}</Descriptions.Item>
                                 </Descriptions>
                             </Col>
                             <Col span={24}>

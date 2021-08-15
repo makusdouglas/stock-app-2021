@@ -2,7 +2,7 @@ import React from 'react';
 import { Typography, Image, Input, Space, Form, Button, Divider, notification} from 'antd'
 import { EyeInvisibleOutlined, EyeTwoTone} from '@ant-design/icons';
 
-import { Container, RightSide, FormContainer } from './styles';
+import { Container, RightSide, FormContainer, LeftSide, TitleApp, ContainerBackground } from './styles';
 import { ValidateErrorEntity } from './types';
 
 // Redux Methods and Types
@@ -12,6 +12,7 @@ import { requestLogin } from './slice'
 
 // assets
 import appStockLogo from '@Assets/images/logos/stok.png'
+import results from '@Assets/images/bg/resultados.svg'
 import { Link } from 'react-router-dom';
 
 
@@ -55,18 +56,22 @@ const SignIn: React.FC = () => {
     //     alignItems: 'center'
     // }
     return (
+        <ContainerBackground>
         <Container>
+            <LeftSide>
+                <TitleApp>Bem vindo ao seu Stock</TitleApp>
+            </LeftSide>
             <RightSide>
                 <FormContainer>
-                    <section>
+                    {/* <section>
                         <Image preview={false} src={appStockLogo} />
-                    </section>
+                    </section> */}
                     <Space direction="vertical" size='middle' style={{padding: 10}}>
-                        <Divider orientation='center' >
+                        {/* <Divider orientation='center' >
                             <Title level={4} style={{ marginBottom: 0 }}>Login</Title>
-                        </Divider>
-                        {/* <Title level={3} style={{ marginBottom: 0 }}>Login</Title> */}
-                        <Text type="secondary">Insira seus dados abaixo:</Text>
+                        </Divider> */}
+                        <Title level={3} style={{ marginBottom: 0 }}>Faça seu login</Title>
+                        {/* <Text type="secondary">Faça seu login:</Text> */}
                         <Form<IAuthState>
                             form={signInForm}
                             initialValues={{ rememberCredentials: false }}
@@ -146,7 +151,7 @@ const SignIn: React.FC = () => {
                         </Form>
 
                     </Space>
-                    <Divider style={{ margin: 0, marginBottom: 5 }} />
+                    {/* <Divider style={{ margin: 0, marginBottom: 5 }} /> */}
                     {/* <Footer
                         style={{
                             // gridArea: 'footer',
@@ -163,6 +168,7 @@ const SignIn: React.FC = () => {
                 </FormContainer>
             </RightSide>
         </Container>
+        </ContainerBackground>
     );
 }
 

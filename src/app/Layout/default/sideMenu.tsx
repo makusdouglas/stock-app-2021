@@ -86,7 +86,7 @@ const SideMenu: React.FC<MenuProps> = ({ collapsed }) => {
                     <Menu.Item key="2">Permissões</Menu.Item>
                 </SubMenu>
 
-                <MenuTitle collapsed={isCollapsed}>
+                <MenuTitle collapsed={isCollapsed}> 
                     <h4>ADMIN</h4>
                 </MenuTitle>
 
