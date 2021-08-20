@@ -51,54 +51,58 @@ const DefaultLayout: React.FC = ({ children }) => {
     <React.Fragment>
       {user.loading === 'succeeded' ?
         <Layout style={{ minHeight: '100vh' }}>
-          
-          {breakpoints.length < 3? 
-           (
-            <SiderDrawer 
-          placement='left'
-          toggleVisibility={(e) => setCollapsed(e)}
-          visible={collapsed}
-          
-          >
-          <div className="logo">
-              <h1>{title}</h1>
-            </div>
-            {/* <Divider style={{ borderColor: '#444', margin: 0 }} /> */}
-            <SideMenu collapsed={collapsed} /> {/**SIDE MENU */}
-          </SiderDrawer>
-           )
-           : (
-            <SiderStyled
-            width={200}
-            trigger={null}
-            collapsible
-            collapsed={collapsed}
-            onCollapse={(coll => setCollapsed(coll))}
-          >
-            <div className="logo">
-              <h1>{title}</h1>
-            </div>
-            
-            <SideMenu collapsed={collapsed} /> 
-          </SiderStyled>
-           )
-          }    
 
-          
+          {breakpoints.length < 3 ?
+            (
+              <SiderDrawer
+                placement='left'
+                toggleVisibility={(e) => setCollapsed(e)}
+                visible={collapsed}
+
+              >
+                <div className="logo">
+                  <h1>{title}</h1>
+                </div>
+                {/* <Divider style={{ borderColor: '#444', margin: 0 }} /> */}
+                <SideMenu collapsed={collapsed} /> {/**SIDE MENU */}
+              </SiderDrawer>
+            )
+            : (
+              <SiderStyled
+                width={200}
+                trigger={null}
+                collapsible
+                collapsed={collapsed}
+                onCollapse={(coll => setCollapsed(coll))}
+              >
+                <div className="logo">
+                  <h1>{title}</h1>
+                </div>
+
+                <SideMenu collapsed={collapsed} />
+              </SiderStyled>
+            )
+          }
+
+
           <Layout>
             <HeaderStyled collapsed={collapsed} toggle={toggle} /> {/** HEADER */}
 
             <Content style={{ margin: '0 16px' }}>
               <Breadcrumb style={{ margin: '16px 0' }}>
-                <Breadcrumb.Item>Home</Breadcrumb.Item>
-                <Breadcrumb.Item>List</Breadcrumb.Item>
-                <Breadcrumb.Item>App</Breadcrumb.Item>
+                {
+                  window.location.href.split('/').map((item, index) => {
+                    if (index > 2) {
+                      return (<Breadcrumb.Item>{item}</Breadcrumb.Item>)
+                    }
+                  })
+                }
               </Breadcrumb>
               {children}
             </Content>
             <Footer style={{ textAlign: 'right' }}>
               <strong>Stok System</strong>
-          ©2021 | Design Sys. by @AntDesign - vBeta 2.0</Footer>
+              ©2021 | Design Sys. by @AntDesign - vBeta 2.0</Footer>
           </Layout>
         </Layout>
         : // if user is not fetched, page returns loading component

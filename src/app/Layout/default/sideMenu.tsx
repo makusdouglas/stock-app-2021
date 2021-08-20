@@ -20,7 +20,7 @@ interface MenuProps {
 }
 const SideMenu: React.FC<MenuProps> = ({ collapsed }) => {
 
-    const [menuText, setMenuText] = useState<string>(collapsed ? 'MENU' : 'MENU PRINCIPAL');
+    const [menuText, setMenuText] = useState<string>(collapsed ? 'MENU' : 'MENU INVENTÁRIO');
     const [isCollapsed, setIsCollapsed] = useState<boolean>(collapsed);
 
     const { firstName, lastName, fabrica } = useAppSelector(state => state.user);
@@ -32,7 +32,7 @@ const SideMenu: React.FC<MenuProps> = ({ collapsed }) => {
             setIsCollapsed(true);
         } else {
             setTimeout(() => {
-                setMenuText('MENU PRINCIPAL');
+                setMenuText('MENU INVENTÁRIO');
                 setIsCollapsed(false);
             }, 100);
         }
@@ -45,53 +45,49 @@ const SideMenu: React.FC<MenuProps> = ({ collapsed }) => {
                 defaultSelectedKeys={['1']}
                 defaultOpenKeys={['sub1']}
             >
-                <MenuUserInfo collapsed={isCollapsed}>
-                    <Space direction='horizontal'>
-                        <Avatar icon={<UserOutlined />} />
-                        {!isCollapsed && <Space direction='vertical'>
-                            <h4>{firstName !== lastName ? `${firstName} ${lastName}` : firstName}</h4>
-                            <div
-                                style={{
-                                    display: 'flex',
-                                    flexDirection: 'row',
-                                    alignItems: 'center',
-                                    justifyContent: 'space-between'
-                                }}
-                            >
-                                <Link to='/user/profile/0'>
+                <Link to='/user/profile/1'>
+                    <MenuUserInfo collapsed={isCollapsed}>
+                        <Space direction='horizontal'>
+                            <Avatar icon={<UserOutlined />} />
+                            {!isCollapsed && <Space direction='vertical'>
+                                <h4>{firstName !== lastName ? `${firstName} ${lastName}` : firstName}</h4>
+                                <div
+                                    style={{
+                                        display: 'flex',
+                                        flexDirection: 'row',
+                                        alignItems: 'center',
+                                        justifyContent: 'space-between'
+                                    }}
+                                >
                                     <h6>{factory.find(f => f.codigo.toString() === fabrica?.toString())?.descricao || 'MASTER'}</h6>
-                                </Link>
-                                <Link to='/user/profile/0'>
-                                    <IconButton
-                                        shape='circle'
-                                        children={<SettingOutlined size={20} />}
-                                    />
-                                </Link>
-                            </div>
-                        </Space>}
-                    </Space>
-                </MenuUserInfo>
+
+                                </div>
+                            </Space>}
+                        </Space>
+                    </MenuUserInfo>
+                </Link>
+                <Menu.Divider />
                 <MenuTitle collapsed={isCollapsed}>
                     <h4>{menuText}</h4>
                 </MenuTitle>
-
                 <Menu.Item key="sub1" icon={<DashboardOutlined />}>
                     <Link to='/app/dashboard'>Dashboard</Link>
                 </Menu.Item>
-                <Menu.Item key="sub10" icon={<UserOutlined />}>
+                {/* <Menu.Item key="sub10" icon={<UserOutlined />}>
                     <Link to='/user/profile/1'>Perfil</Link>
-                </Menu.Item>
-                <SubMenu key="sub2" icon={<UsergroupAddOutlined /> } title="Equipes Inventário">
-                    <Menu.Item key="1"><Link to='/team/manage/1'>Cadastro de usuarios</Link></Menu.Item>
+                </Menu.Item> */}
+                <SubMenu key="sub2" icon={<UsergroupAddOutlined />} title="Equipes Inventário">
+                    <Menu.Item key="1"><Link to='/admusers/manage/1'>Cadastro de usuarios</Link></Menu.Item>
                     <Menu.Item key="2">Permissões</Menu.Item>
                 </SubMenu>
-
-                <MenuTitle collapsed={isCollapsed}> 
+                <Menu.Divider />
+                <MenuTitle collapsed={isCollapsed}>
                     <h4>ADMIN</h4>
                 </MenuTitle>
 
-                <SubMenu key='sub3' icon={<SettingOutlined />} title='Usuários'>
-                    <Menu.Item key="sub7" icon={<UserAddOutlined />}>
+                <Menu.Item key='sub3' icon={<TeamOutlined />} >
+                    <Link to='/admusers/manage/1'>Usuários</Link>
+                    {/* <Menu.Item key="sub7" icon={<UserAddOutlined />}>
                         <Link to='/app/dashboard'>Adicionar</Link>
                     </Menu.Item>
                     <Menu.Item key="sub5" icon={<TeamOutlined />}>
@@ -99,8 +95,11 @@ const SideMenu: React.FC<MenuProps> = ({ collapsed }) => {
                     </Menu.Item>
                     <Menu.Item key="sub6" icon={<SafetyOutlined />}>
                         <Link to='/app/dashboard'>Permissões</Link>
-                    </Menu.Item>
-                </SubMenu>
+                    </Menu.Item> */}
+                </Menu.Item>
+                <Menu.Item key="sub6" icon={<SafetyOutlined />}>
+                    <Link to='/permissions/adm/1'>Permissões</Link>
+                </Menu.Item>
 
             </Menu>
         </React.Fragment>

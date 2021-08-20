@@ -1,68 +1,60 @@
-import React from 'react'
-import { Button, DatePicker, Form, FormProps, Input, notification } from 'antd';
+import React from 'react';
+import {
+    Form,
+    Input,
+    Button,
+    DatePicker,
+    notification,
+} from 'antd';
+import { FormProps } from 'antd/lib/form';
 import { Container, RowResponsive, Section } from './styles';
 import api from '@Services/api';
 import { format } from 'date-fns';
-import { useState } from 'react';
 
-
-interface UsersData {
-    id: string | number | null,
-    email: string,
-    firstname: string,
-    lastname: string,
-    birth: string
-}
-
-interface Props {
-    userData: UsersData 
-}
 const formItemLayout: FormProps = {
     style: {
         maxWidth: 900
     }
+
 };
-    
+
 interface FormData {
     email: string,
+    password: string
     firstname: string,
     lastname: string,
     birth: string,
 }
 
-    
-
-function EditCollaborator({ userData }:Props){
-
+const AddCollaborator = () => {
     const [form] = Form.useForm();
-   
 
     const onFinish = async (values: FormData) => {
-        // const birthday = format(new Date(values?.birth), 'yyyy-MM-dd')
-        // values.birth = birthday
-        console.log(values);
-        
-        // api.patch(`users/${userData.id}`, values).then((data)=>{
-        //     console.log(data);
+        const birthday = format(new Date(values.birth), 'yyyy-MM-dd')
+        values.birth = birthday
+        api.post('users/register', values).then((data)=>{
+            console.log(data);
             
-        //     notification.success({
-        //         message: 'Sucesso',
-        //         description: 'Atualização realizada'
-        //     })
-        // }
+            notification.success({
+                message: 'Sucesso',
+                description: 'Cadastro efetuado'
+            })
+        }
 
-        // ).catch( e =>{
+        ).catch( e =>{
             
-        //     notification.error({
-        //         message: `Erro ${e.response.status} no cadastro`,
-        //         description: 'Erro: '+ e.response.data.message
-        //     })}
-        // )
+            notification.error({
+                message: `Erro ${e.response.status} no cadastro`,
+                description: 'Erro: '+ e.response.data.message
+            })}
+        )
     };
-    return(
+
+    return (
         <Container>
-            <Section style={{ width: '100%' }}>
-            <Form
+            <Section>
+                <h2>Cadastrar Função</h2>
+                <Form
                     {...formItemLayout}
                     form={form}
                     name="register"
@@ -85,12 +77,12 @@ function EditCollaborator({ userData }:Props){
                                     message: 'Nome muito curto, verifique e tente novamente'
                                 },
                                 {
-                                    required: false,
+                                    required: true,
                                     message: 'Insira seu nome',
                                 },
                             ]}
                         >
-                            <Input placeholder={userData.firstname}/>
+                            <Input />
                         </Form.Item>
 
 
@@ -104,12 +96,12 @@ function EditCollaborator({ userData }:Props){
                                     message: 'Sobrenome muito curto, verifique e tente novamente'
                                 },
                                 {
-                                    required: false,
+                                    required: true,
                                     message: 'Insira seu sobrenome',
                                 },
                             ]}
                         >
-                            <Input placeholder={userData.lastname}/>
+                            <Input />
                         </Form.Item>
                         <Form.Item
                             name="birth"
@@ -117,13 +109,13 @@ function EditCollaborator({ userData }:Props){
                             rules={[
                                 {
                                     type: 'object' as const,
-                                    required: false,
+                                    required: true,
                                     message: 'Por favor, informe sua data de mascimento',
                                 }
                             ]}
 
                         >
-                            <DatePicker format='DD/MM/YYYY' placeholder={new Date(userData.birth).toLocaleDateString()}/>
+                            <DatePicker format='DD/MM/YYYY' />
                         </Form.Item>
 
                     </RowResponsive>
@@ -138,22 +130,35 @@ function EditCollaborator({ userData }:Props){
                                 message: 'Email inválido.',
                             },
                             {
-                                required: false,
+                                required: true,
                                 message: 'Por favor, insira seu e-mail!',
                             },
                         ]}
                     >
-                        <Input placeholder={userData.email} />
+                        <Input />
+                    </Form.Item>
+                    <Form.Item
+                        name="password"
+                        label="Senha"
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Por favor, insira sua senha para confirmar a alteração!',
+                            },
+                        ]}
+                        hasFeedback
+                    >
+                        <Input.Password />
                     </Form.Item>
                     <Form.Item>
                         <Button type="primary" htmlType="submit">
-                            Atualizar
+                            Cadastrar
                         </Button>
                     </Form.Item>
                 </Form>
             </Section>
         </Container>
-    )
-}
+    );
+};
 
-export default EditCollaborator
+export default AddCollaborator

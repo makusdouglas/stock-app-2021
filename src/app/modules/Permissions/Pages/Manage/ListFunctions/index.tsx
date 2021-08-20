@@ -91,7 +91,7 @@ const ListCollaborators: React.FC = () => {
     return (
         <Container>
             <Section style={{ width: '100%' }}>
-                <h2>Colaboradores Cadastrados</h2>
+                <h2>Funções Cadastradas</h2>
                 <List
                     itemLayout="vertical"
                     size="large"
@@ -147,7 +147,7 @@ const ListCollaborators: React.FC = () => {
                         Encerrar edição
                     </Button>
                 ]} >
-                    <EditCollaborator userData={userSelected} />
+                    <EditCollaborator userData={userSelected} userToken={token} />
                 </Modal>
             </Section>
         </Container>
