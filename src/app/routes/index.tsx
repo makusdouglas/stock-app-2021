@@ -19,7 +19,7 @@ export const DefaultRoutes: React.FC = () => {
             <Route path='/app' component={AppModule} isPrivate />
             <Route path='/home' exact component={Home} isPrivate />
             <Route path='/user' component={UserModule} isPrivate />
-            <Route path='/admusers' component={AdmUsersModule} isPrivate />
+            <Route path='/users' component={AdmUsersModule} isPrivate />
             <Route path='/permissions' component={Permissions} isPrivate />
             <Route component={() => <Redirect to='/app/404' />} isPrivate undefinedRoute />
         </Switch>

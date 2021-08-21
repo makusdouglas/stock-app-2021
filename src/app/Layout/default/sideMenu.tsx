@@ -77,7 +77,7 @@ const SideMenu: React.FC<MenuProps> = ({ collapsed }) => {
                     <Link to='/user/profile/1'>Perfil</Link>
                 </Menu.Item> */}
                 <SubMenu key="sub2" icon={<UsergroupAddOutlined />} title="Equipes Inventário">
-                    <Menu.Item key="1"><Link to='/admusers/manage/1'>Cadastro de usuarios</Link></Menu.Item>
+                    <Menu.Item key="1"><Link to='/users/manage'>Cadastro de usuarios</Link></Menu.Item>
                     <Menu.Item key="2">Permissões</Menu.Item>
                 </SubMenu>
                 <Menu.Divider />
@@ -86,7 +86,7 @@ const SideMenu: React.FC<MenuProps> = ({ collapsed }) => {
                 </MenuTitle>
 
                 <Menu.Item key='sub3' icon={<TeamOutlined />} >
-                    <Link to='/admusers/manage/1'>Usuários</Link>
+                    <Link to='/users/manage'>Usuários</Link>
                     {/* <Menu.Item key="sub7" icon={<UserAddOutlined />}>
                         <Link to='/app/dashboard'>Adicionar</Link>
                     </Menu.Item>
@@ -98,7 +98,7 @@ const SideMenu: React.FC<MenuProps> = ({ collapsed }) => {
                     </Menu.Item> */}
                 </Menu.Item>
                 <Menu.Item key="sub6" icon={<SafetyOutlined />}>
-                    <Link to='/permissions/adm/1'>Permissões</Link>
+                    <Link to='/permissions/manage'>Permissões</Link>
                 </Menu.Item>
 
             </Menu>

@@ -1,20 +1,34 @@
-import React from 'react';
-import {
-    Form,
-    Input,
-    Button,
-    notification,
-} from 'antd';
-import { FormProps } from 'antd/lib/form';
+import React from 'react'
+import { Button, Form, FormProps, Input, message, notification} from 'antd';
 import { Container, Section } from './styles';
 import api from '@Services/api';
-import { useAppSelector } from '@Store/hooks';
 
+
+interface PermissionsData {
+    id: string | number | null,
+    nmodule: string,
+    type: string,
+    description: string,
+    createAt: string,
+    updateAt: string,
+}
+interface RoleData {
+    id: string | number | null,
+    name: string,
+    description: string,
+    createdAt: string,
+    updatedAt: string,
+    permissions: PermissionsData[]
+}
+
+interface Props {
+    roleData: RoleData
+    userToken: string | null
+}
 const formItemLayout: FormProps = {
     style: {
         maxWidth: 900
     }
-
 };
 
 interface FormData {
@@ -22,41 +36,51 @@ interface FormData {
     description: string
 }
 
-const AddFunction = () => {
+
+
+function EditCollaborator({ roleData, userToken }: Props) {
+
     const [form] = Form.useForm();
-    const { token } = useAppSelector(state => state.auth)
+
 
     const onFinish = async (values: FormData) => {
-        api.post('roles', {
-            name: values.name.toUpperCase(),
-            description: values.description
-        }, {
-            headers: {
-                Authorization: `Bearer ${token}`
+        if (values.name || values.description) {
+            var updateInfo = values
+            // const birthday = format(new Date(values?.birth), 'yyyy-MM-dd')
+            // values.birth = birthday
+            updateInfo = {
+                name: values.name ? values.name : roleData.name,
+                description: values.description ? values.description : roleData.description
             }
-        }).then((data) => {
-            console.log(data);
 
-            notification.success({
-                message: 'Sucesso',
-                description: 'Cadastro efetuado'
-            })
+            api.patch(`roles/${roleData.id}`, updateInfo, {
+                headers: {
+                    Authorization: `Bearer ${userToken}`
+                }
+            }).then((data) => {
+                console.log(data);
+
+                notification.success({
+                    message: 'Sucesso',
+                    description: 'Atualização realizada'
+                })
+            }
+
+            ).catch(e => {
+
+                notification.error({
+                    message: `Erro ${e.response.status} no cadastro`,
+                    description: 'Erro: ' + e.response.data.message
+                })
+            }
+            )
+        } else {
+            message.info("Sem alteração")
         }
-
-        ).catch(e => {
-
-            notification.error({
-                message: `Erro ${e.response.status} no cadastro`,
-                description: 'Erro: ' + e.response.data.message
-            })
-        }
-        )
     };
-
     return (
         <Container>
             <Section style={{ width: '100%' }}>
-                <h2>Cadastrar nova função</h2>
                 <Form
                     {...formItemLayout}
                     form={form}
@@ -72,28 +96,22 @@ const AddFunction = () => {
                     <Form.Item
                         name="name"
                         label="Nome da Função"
-                        required
-                        tooltip="Iforme o nome da nova função que deseja cadastrar"
+                        tooltip="Informe o nome da nova função que deseja cadastrar"
                         rules={[
                             {
                                 type: 'string',
                                 min: 2,
                                 message: 'Nome muito curto, verifique e tente novamente'
                             },
-                            {
-                                required: true,
-                                message: 'Insira o nome da função',
-                            },
                         ]}
                     >
-                        <Input />
+                        <Input placeholder={roleData.name} />
                     </Form.Item>
 
 
                     <Form.Item
                         name="description"
                         label="Descrição da função"
-                        required
                         tooltip="Insira uma breve descrição da função"
                         rules={[
                             {
@@ -101,13 +119,9 @@ const AddFunction = () => {
                                 min: 2,
                                 message: 'descrição muito curta, verifique e tente novamente'
                             },
-                            {
-                                required: true,
-                                message: 'Insira uma breve descrição da função',
-                            },
                         ]}
                     >
-                        <Input.TextArea />
+                        <Input.TextArea placeholder={roleData.description} />
                     </Form.Item>
 
                     <Form.Item>
@@ -118,7 +132,7 @@ const AddFunction = () => {
                 </Form>
             </Section>
         </Container>
-    );
-};
+    )
+}
 
-export default AddFunction
+export default EditCollaborator

@@ -3,12 +3,11 @@ import ContentBox from '../../../../components/ContentBox';
 import { Tabs } from 'antd';
 
 // icons 
-import { OrderedListOutlined, FormOutlined, TeamOutlined } from '@ant-design/icons';
+import { SolutionOutlined, CheckSquareOutlined } from '@ant-design/icons';
 // Pages
-import UserProfile from './Permissions';
-import AddCollaborator from './AddFunction';
+import Permissions from './Permissions';
 import { useParams } from 'react-router';
-import ListCollaborators from './ListFunctions';
+import ListFunctions from './ListFunctions';
 const { TabPane } = Tabs;
 
 const Manage: React.FC = () => {
@@ -20,37 +19,27 @@ const Manage: React.FC = () => {
   return (
     <ContentBox cProps={{ minHeight: 400 }}>
       <Tabs defaultActiveKey={tab} tabPosition={'left'} style={{ minHeight: 220 }}>
+
         <TabPane
           tab={
             <span>
-              <FormOutlined />
-              Cadastrar Função
+              <SolutionOutlined />
+              Funções
             </span>
           }
           key='1'
         >
-          <AddCollaborator />
-        </TabPane>
-        <TabPane
-          tab={
-            <span>
-              <OrderedListOutlined />
-              Funções Cadastradas
-            </span>
-          }
-          key='2'
-        >
-          <ListCollaborators />
+          <ListFunctions />
         </TabPane>
         <TabPane tab={
           <span>
-            <TeamOutlined />
+            <CheckSquareOutlined />
             Permissões
           </span>
         }
-          key='3'
+          key='2'
         >
-          <UserProfile />
+          <Permissions />
         </TabPane>
       </Tabs>
 

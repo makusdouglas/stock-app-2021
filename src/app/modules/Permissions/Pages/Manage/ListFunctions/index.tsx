@@ -1,45 +1,58 @@
 import api from '@Services/api';
 import { useAppSelector } from '@Store/hooks';
-import { Button, List, message, Modal, notification, Popconfirm } from 'antd';
+import { Button, List, message, Modal, notification, Popconfirm} from 'antd';
 import React, { useEffect } from 'react';
 import { useState } from 'react';
 import { Container, Section } from './styles';
-import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
-import EditCollaborator from './EditCollaborator';
+import { EditOutlined, DeleteOutlined, PlusOutlined } from '@ant-design/icons';
+import AddFunction from '../AddFunction';
+import EditCollaborator from './AlterFunction';
 
-interface UsersData {
+
+interface PermissionsData {
     id: string | number | null,
-    email: string,
-    firstname: string,
-    lastname: string,
-    birth: string
+    nmodule: string,
+    type: string,
+    description: string,
+    createAt: string,
+    updateAt: string,
+}
+interface RoleData {
+    id: string | number | null,
+    name: string,
+    description: string,
+    createdAt: string,
+    updatedAt: string,
+    permissions: PermissionsData[]
 }
 const ListCollaborators: React.FC = () => {
 
     const { token } = useAppSelector(state => state.auth)
-    const userLoged = useAppSelector(state => state.user)
-    const [users, setUsers] = useState<UsersData[]>([])
-    const [userSelected, setUserSelected] = useState<UsersData>({
+    const [roles, setRoles] = useState<RoleData[]>([])
+    const [roleSelected, setRoleSelected] = useState<RoleData>({
         id: '',
-        email: '',
-        firstname: '',
-        lastname: '',
-        birth: ''
+        name:'',
+        description:'',
+        permissions:[],
+        createdAt:'',
+        updatedAt:''
     })
     const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
+    const [isAddModalVisible, setIsAddModalVisible] = useState<boolean>(false);
 
     useEffect(() => {
-        listarUsuarios()
+        listarFuncoes()
     }, [])
+    console.log(roles);
 
-    const listarUsuarios = () => {
-        api.get('users', {
+    const listarFuncoes = () => {
+        api.get('roles', {
             headers: {
                 Authorization: `Bearer ${token}`
             }
         }).then((data) => {
             // console.log(data.data);
-            setUsers(data.data)
+            setRoles(data.data.roles)
             // notification.success({
             //     message: 'Sucesso',
             //     description: 'Usuarios listados'
@@ -57,22 +70,16 @@ const ListCollaborators: React.FC = () => {
         )
     }
     function confirm(id: string | number | null) {
-        if (userLoged.id !== id) {
-            api.delete(`users/${id}`, {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            }).then(
-                message.success('Exclusão realizada')
-            ).catch(
-                e => message.error(e)
-            )
-            listarUsuarios()
-        } else {
-            if (userLoged.id === id) {
-                message.error('Não pode excluir a si mesmo!');
+        api.delete(`roles/${id}`, {
+            headers: {
+                Authorization: `Bearer ${token}`
             }
-        }
+        }).then(
+            message.success('Exclusão realizada')
+        ).catch(
+            e => message.error(e)
+        )
+        listarFuncoes()
 
     }
     function cancel(e: any) {
@@ -80,18 +87,34 @@ const ListCollaborators: React.FC = () => {
         message.error('Exclusão cancelada');
     }
 
-    function showModal(item: UsersData) {
-        setUserSelected(item)
+    function showModal(item: RoleData) {
+        setRoleSelected(item)
         setIsModalVisible(true)
     }
     const handleOk = () => {
-        listarUsuarios()
+        listarFuncoes()
         setIsModalVisible(false);
+    }
+
+    function showAddModal() {
+        setIsAddModalVisible(true)
+    }
+    const handleAddOk = () => {
+        listarFuncoes()
+        setIsAddModalVisible(false);
     }
     return (
         <Container>
             <Section style={{ width: '100%' }}>
                 <h2>Funções Cadastradas</h2>
+
+                <Modal visible={isAddModalVisible} closable={false} footer={[
+                    <Button type='default' size='small' onClick={handleAddOk}>
+                        Encerrar adição
+                    </Button>
+                ]} >
+                    <AddFunction />
+                </Modal>
                 <List
                     itemLayout="vertical"
                     size="large"
@@ -101,7 +124,12 @@ const ListCollaborators: React.FC = () => {
                         },
                         pageSize: 3,
                     }}
-                    dataSource={users}
+                    header={
+                        <Button type='link' icon={<PlusOutlined />} size='small' onClick={showAddModal}>
+                            Criar função
+                        </Button>
+                    }
+                    dataSource={roles}
                     renderItem={item =>
                         <>
                             <List.Item
@@ -124,16 +152,14 @@ const ListCollaborators: React.FC = () => {
                                 ]}
                             >
                                 <List.Item.Meta
-                                    title={item.firstname + ' ' + item.lastname}
+                                    title={item.name}
                                     description={
                                         <>
                                             <p>
-                                                idade: {item.birth ?
-                                                    new Date().getFullYear() - new Date(item.birth).getFullYear() :
-                                                    0} anos
+                                                descrição: {item.description}
                                             </p>
                                             <p>
-                                                email: {item.email}
+                                                criado em: {new Date(item.createdAt).toLocaleDateString()} | ultima atualização: {new Date(item.updatedAt).toLocaleDateString()}
                                             </p>
                                         </>
                                     }
@@ -147,7 +173,7 @@ const ListCollaborators: React.FC = () => {
                         Encerrar edição
                     </Button>
                 ]} >
-                    <EditCollaborator userData={userSelected} userToken={token} />
+                    <EditCollaborator roleData={roleSelected} userToken={token} />
                 </Modal>
             </Section>
         </Container>
