@@ -6,14 +6,11 @@ import {
     DashboardOutlined,
     UserOutlined,
     TeamOutlined,
-    SettingOutlined,
     SafetyOutlined,
-    UsergroupAddOutlined,
-    UserAddOutlined
+    UsergroupAddOutlined
 } from '@ant-design/icons'
-import { IconButton, MenuTitle, MenuUserInfo } from './styles';
+import { MenuTitle, MenuUserInfo } from './styles';
 import { useAppSelector } from '../../store/hooks';
-// import { Container } from './styles';
 const { SubMenu } = Menu;
 interface MenuProps {
     collapsed: boolean;
@@ -73,11 +70,8 @@ const SideMenu: React.FC<MenuProps> = ({ collapsed }) => {
                 <Menu.Item key="sub1" icon={<DashboardOutlined />}>
                     <Link to='/app/dashboard'>Dashboard</Link>
                 </Menu.Item>
-                {/* <Menu.Item key="sub10" icon={<UserOutlined />}>
-                    <Link to='/user/profile/1'>Perfil</Link>
-                </Menu.Item> */}
                 <SubMenu key="sub2" icon={<UsergroupAddOutlined />} title="Equipes Inventário">
-                    <Menu.Item key="1"><Link to='/users/manage'>Cadastro de usuarios</Link></Menu.Item>
+                    <Menu.Item key="1"><Link to='/teams/manage'>Definir equipes</Link></Menu.Item>
                     <Menu.Item key="2">Permissões</Menu.Item>
                 </SubMenu>
                 <Menu.Divider />
@@ -87,15 +81,6 @@ const SideMenu: React.FC<MenuProps> = ({ collapsed }) => {
 
                 <Menu.Item key='sub3' icon={<TeamOutlined />} >
                     <Link to='/users/manage'>Usuários</Link>
-                    {/* <Menu.Item key="sub7" icon={<UserAddOutlined />}>
-                        <Link to='/app/dashboard'>Adicionar</Link>
-                    </Menu.Item>
-                    <Menu.Item key="sub5" icon={<TeamOutlined />}>
-                        <Link to='/app/dashboard'>Grupos</Link>
-                    </Menu.Item>
-                    <Menu.Item key="sub6" icon={<SafetyOutlined />}>
-                        <Link to='/app/dashboard'>Permissões</Link>
-                    </Menu.Item> */}
                 </Menu.Item>
                 <Menu.Item key="sub6" icon={<SafetyOutlined />}>
                     <Link to='/permissions/manage'>Permissões</Link>

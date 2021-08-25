@@ -8,6 +8,7 @@ import AppModule from '@Module/Application/Routes';
 import UserModule from '@Module/User/Routes';
 import AdmUsersModule from '@Module/AdmUsers/Routes'
 import Permissions from '@Module/Permissions/Routes'
+import StockCheckersTeam from '@Module/StockCheckersTeam/Routes'
 import Home from '@Module/Home';
 import SignIn from '@Module/SignIn';
 import Route from '@Routes/Route';
@@ -21,6 +22,7 @@ export const DefaultRoutes: React.FC = () => {
             <Route path='/user' component={UserModule} isPrivate />
             <Route path='/users' component={AdmUsersModule} isPrivate />
             <Route path='/permissions' component={Permissions} isPrivate />
+            <Route path='/teams' component={StockCheckersTeam} isPrivate />
             <Route component={() => <Redirect to='/app/404' />} isPrivate undefinedRoute />
         </Switch>
 

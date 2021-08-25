@@ -5,10 +5,10 @@ import { Tabs } from 'antd';
 // icons 
 import { OrderedListOutlined, FormOutlined, TeamOutlined } from '@ant-design/icons';
 // Pages
-import UserProfile from './TeamProfile';
-import AddCollaborator from './AddCollaborator';
+import TeamProfile from './TeamProfile';
+import AddTeam from './AddTeam';
 import { useParams } from 'react-router';
-import ListCollaborators from './ListCollaborators';
+import ListTeams from './ListTeam';
 const { TabPane } = Tabs;
 
 const Manage: React.FC = () => {
@@ -24,33 +24,23 @@ const Manage: React.FC = () => {
           tab={
             <span>
               <FormOutlined />
-              Cadastrar Colaborador
+            Definir Equipes
             </span>
           }
           key='1'
         >
-          <AddCollaborator />
+          <AddTeam />
         </TabPane>
         <TabPane
           tab={
             <span>
               <OrderedListOutlined />
-              Lista de Colaboradores
+              Alocar seções/departamentos
             </span>
           }
           key='2'
         >
-          <ListCollaborators />
-        </TabPane>
-        <TabPane tab={
-          <span>
-            <TeamOutlined />
-            Definir funções
-          </span>
-        }
-          key={'0'}
-        >
-          <UserProfile />
+          <ListTeams/>
         </TabPane>
       </Tabs>
 

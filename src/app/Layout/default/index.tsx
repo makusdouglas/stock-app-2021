@@ -95,14 +95,15 @@ const DefaultLayout: React.FC = ({ children }) => {
                     if (index > 2) {
                       return (<Breadcrumb.Item>{item}</Breadcrumb.Item>)
                     }
+                    return(<></>)
                   })
                 }
               </Breadcrumb>
               {children}
             </Content>
             <Footer style={{ textAlign: 'right' }}>
-              <strong>Stok System</strong>
-              ©2021 | Design Sys. by @AntDesign - vBeta 2.0</Footer>
+              <strong>Stok System </strong>
+              ©{new Date().getFullYear()} | Design Sys. by @AntDesign - vBeta 2.0</Footer>
           </Layout>
         </Layout>
         : // if user is not fetched, page returns loading component
